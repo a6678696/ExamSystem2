@@ -1,0 +1,100 @@
+{
+  "id": "2637650",
+  "name": "myproject",
+  "font_family": "element-icons",
+  "css_prefix_text": "el-icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "15534929",
+      "name": "考试",
+      "font_class": "myTest",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "7336830",
+      "name": "我的",
+      "font_class": "myQuestion",
+      "unicode": "e66e",
+      "unicode_decimal": 58990
+    },
+    {
+      "icon_id": "16364341",
+      "name": "全部",
+      "font_class": "myAllQuestion",
+      "unicode": "e635",
+      "unicode_decimal": 58933
+    },
+    {
+      "icon_id": "8356540",
+      "name": "单选题",
+      "font_class": "myOne",
+      "unicode": "e644",
+      "unicode_decimal": 58948
+    },
+    {
+      "icon_id": "8356541",
+      "name": "多选题",
+      "font_class": "myTwo",
+      "unicode": "e645",
+      "unicode_decimal": 58949
+    },
+    {
+      "icon_id": "14463282",
+      "name": "填空题",
+      "font_class": "myFill",
+      "unicode": "e761",
+      "unicode_decimal": 59233
+    },
+    {
+      "icon_id": "573859",
+      "name": "查看",
+      "font_class": "mySearch",
+      "unicode": "e63e",
+      "unicode_decimal": 58942
+    },
+    {
+      "icon_id": "19657500",
+      "name": "添加",
+      "font_class": "myAdd",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "16394885",
+      "name": "成绩",
+      "font_class": "myScore",
+      "unicode": "e67a",
+      "unicode_decimal": 59002
+    },
+    {
+      "icon_id": "7090082",
+      "name": "修改密码",
+      "font_class": "modifyPassword",
+      "unicode": "e718",
+      "unicode_decimal": 59160
+    },
+    {
+      "icon_id": "6286024",
+      "name": "试卷",
+      "font_class": "myPaper",
+      "unicode": "e64a",
+      "unicode_decimal": 58954
+    },
+    {
+      "icon_id": "20765330",
+      "name": "班级",
+      "font_class": "myClass",
+      "unicode": "e641",
+      "unicode_decimal": 58945
+    },
+    {
+      "icon_id": "2019094",
+      "name": "学生",
+      "font_class": "myStudent",
+      "unicode": "e7c0",
+      "unicode_decimal": 59328
+    }
+  ]
+}

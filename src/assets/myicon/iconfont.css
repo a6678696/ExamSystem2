@@ -1,0 +1,67 @@
+@font-face {
+  font-family: "element-icons"; /* Project id 2637650 */
+  src: url('iconfont.woff2?t=1625030545725') format('woff2'),
+       url('iconfont.woff?t=1625030545725') format('woff'),
+       url('iconfont.ttf?t=1625030545725') format('truetype');
+}
+
+.element-icons {
+  font-family: "element-icons" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.el-icon-myTest:before {
+  content: "\e603";
+}
+
+.el-icon-myQuestion:before {
+  content: "\e66e";
+}
+
+.el-icon-myAllQuestion:before {
+  content: "\e635";
+}
+
+.el-icon-myOne:before {
+  content: "\e644";
+}
+
+.el-icon-myTwo:before {
+  content: "\e645";
+}
+
+.el-icon-myFill:before {
+  content: "\e761";
+}
+
+.el-icon-mySearch:before {
+  content: "\e63e";
+}
+
+.el-icon-myAdd:before {
+  content: "\e615";
+}
+
+.el-icon-myScore:before {
+  content: "\e67a";
+}
+
+.el-icon-modifyPassword:before {
+  content: "\e718";
+}
+
+.el-icon-myPaper:before {
+  content: "\e64a";
+}
+
+.el-icon-myClass:before {
+  content: "\e641";
+}
+
+.el-icon-myStudent:before {
+  content: "\e7c0";
+}
+

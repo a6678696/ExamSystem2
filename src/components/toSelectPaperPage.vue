@@ -1,0 +1,227 @@
+<template>
+  <div>
+    <el-dialog
+      title="提示"
+      :visible.sync="dialogVisible"
+      width="30%"
+      :before-close="handleClose">
+      <p>你选择的科目是：<span style="color: red">{{ this.form.courseName }}</span>，是否要开始考试？</p>
+      <span slot="footer" class="dialog-footer">
+       <el-button type="primary" @click="createPaper()">确 定</el-button>
+       <el-button type="danger" @click="dialogVisible = false">取 消</el-button>
+      </span>
+    </el-dialog>
+    <el-dialog
+      title="正在考试"
+      :visible.sync="dialogVisible2"
+      width="30%"
+      fullscreen="fullscreen"
+      :show-close="false"
+      :before-close="handleClose">
+      <p>当前考试的科目是：<span style="color: red">{{ this.form.courseName }}</span>，剩余考试时间：<span
+        style="color: red"><span v-show="count>=59">{{ minutes }}分</span>{{ seconds }}秒</span>，考试结束时间如果到了系统将强制自动交卷</p>
+      <hr>
+      <strong style="font-size: 17px">一、选择题，每题5分，共15题，总分75分。(剩余考试时间：<span
+        style="color: red"><span v-show="count>=59">{{ minutes }}分</span>{{ seconds }}秒</span>)</strong>
+      <div v-for="(value,index) in questionSingleList">
+        <p style="color: blue;font-size: 15px">第{{ index + 1 }}题：</p>
+        <p style="font-size: 15px">{{ value.question.content }}</p>
+        <p v-for="(value2,index2) in value.answerList">
+          {{ index2 === 0 ? 'A' : (index2 === 1 ? 'B' : (index2 === 2 ? 'C' : 'D')) }}、
+          <span>{{ value2.content }}</span></p>
+        <p>
+          <span style="color: #55a532">你的答案：</span>
+          <input type="radio" :name="'answerSingle'+'_'+(index+1)" :id="'answerSingle'+'_'+(index+1)+'_1'" value="1"
+                 style="vertical-align:middle;margin-top:-2px;margin-bottom:1px;"
+                 @click="selectSingleAnswer(index+1,1)">A
+          <input type="radio" :name="'answerSingle'+'_'+(index+1)" :id="'answerSingle'+'_'+(index+1)+'_2'" value="2"
+                 style="vertical-align:middle;margin-top:-2px;margin-bottom:1px;"
+                 @click="selectSingleAnswer(index+1,2)">B
+          <input type="radio" :name="'answerSingle'+'_'+(index+1)" :id="'answerSingle'+'_'+(index+1)+'_3'" value="3"
+                 style="vertical-align:middle;margin-top:-2px;margin-bottom:1px;"
+                 @click="selectSingleAnswer(index+1,3)">C
+          <input type="radio" :name="'answerSingle'+'_'+(index+1)" :id="'answerSingle'+'_'+(index+1)+'_4'" value="4"
+                 style="vertical-align:middle;margin-top:-2px;margin-bottom:1px;"
+                 @click="selectSingleAnswer(index+1,4)">D
+        </p>
+      </div>
+      <strong style="font-size: 17px">二、填空题，每题5分，共5题，总分25分。(剩余考试时间：<span
+        style="color: red"><span v-show="count>=59">{{ minutes }}分</span>{{ seconds }}秒</span>)</strong>
+      <div v-for="(value,index) in questionFillList">
+        <p style="color: blue;font-size: 15px">第{{ index + 1 }}题：
+        </p>
+        <p style="font-size: 15px">{{ value.question.content }}</p>
+        <p>
+          <span style="color: #55a532">你的答案：</span><input type="text" style="width: 44%"
+                                                          v-model="questionFillAnswers[index]"
+                                                          :id="'answerFill'+'_'+(index+1)">
+        </p>
+      </div>
+      <span slot="footer" class="dialog-footer">
+       <el-button type="primary" @click="submitPaper()">交卷</el-button>
+       <el-button type="danger" @click="submitPaperCompulsory()">强制交卷</el-button>
+      </span>
+    </el-dialog>
+    <div style="width: 40%;margin-top: 6%">
+      <el-form :model="form" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+        <el-form-item label="选择科目" prop="courseId">
+          <el-select v-model="form.courseId" placeholder="请选择科目">
+            <el-option :label="course.name" :value="course.id"
+                       v-for="course in form.allCourse"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item style="text-align: center">
+          <el-button type="primary" @click="openDialog()">开始考试</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+import ElementUI from "element-ui";
+import jquery from "jquery";
+
+export default {
+  name: "toSelectPaperPage",
+  data() {
+    return {
+      dialogVisible: false,
+      dialogVisible2: false,
+      count: '',
+      minutes: '',
+      seconds: '',
+      questionSingleList: null,
+      questionFillList: null,
+      questionSingleAnswers: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      questionFillAnswers: ['', '', '', '', ''],
+      form: {
+        courseId: '',
+        courseName: '',
+        allCourse: null
+      }
+    };
+  },
+  methods: {
+    openDialog: function () {
+      if (this.form.courseId === '') {
+        ElementUI.Message.error("请选择科目");
+        return;
+      }
+      for (let i = 0; i < this.form.allCourse.length; i++) {
+        if (this.form.allCourse[i].id === this.form.courseId) {
+          this.form.courseName = this.form.allCourse[i].name;
+          break;
+        }
+      }
+      this.dialogVisible = true;
+    },
+    createPaper: function () {
+      this.dialogVisible = false;
+      this.dialogVisible2 = true;
+      this.count = 0;
+      this.getCode();
+      let _this = this;
+      let param = new URLSearchParams();
+      param.append("userId", sessionStorage.getItem("userId"));
+      param.append("courseId", this.form.courseId);
+      param.append("courseName", this.form.courseName);
+      axios
+        .post('http://localhost/paper/add', param)
+        .then(function (response) {
+          _this.questionSingleList = response.data.resultSingleQuestionList;
+          _this.questionFillList = response.data.resultFillQuestionList;
+        })
+        .catch(function (error) {
+          alert(error);
+          console.log(error);
+        });
+    },
+    getCode: function () {
+      let _this = this;
+      let TIME_COUNT = 3600;
+      if (this.count === '' || this.count === 0) {
+        this.count = TIME_COUNT;
+      }
+      let interval = setInterval(function () {
+        //Math.floor去整数
+        _this.minutes = Math.floor(_this.count / 60);
+        _this.seconds = _this.count % 60;
+        if (_this.count > 0) {
+          _this.count--;
+        } else if (_this.count === 0) {
+          ElementUI.Message.error("考试时间到了，系统自动交卷！");
+          _this.dialogVisible2 = false;
+          clearInterval(interval);
+          location.reload();
+        }
+      }, 1000);
+    },
+    submitPaper: function () {
+      let answerSingleStr = '';
+      let answerFillStr = '';
+      let flag1 = true;
+      let flag2 = true;
+      for (let i = 0; i < this.questionSingleAnswers.length; i++) {
+        if (this.questionSingleAnswers[i] === 0) {
+          ElementUI.Message.error("第" + (i + 1) + "道选择题没有选择答案！如果要继续交卷，就请选择强制交卷吧！！");
+          flag1 = false;
+          break;
+        }
+        if (i === 0) {
+          answerSingleStr = answerSingleStr + this.questionSingleAnswers[i];
+        } else {
+          answerSingleStr = answerSingleStr + "," + this.questionSingleAnswers[i];
+        }
+      }
+      if (flag1 === true) {
+        for (let i = 0; i < this.questionFillAnswers.length; i++) {
+          if (this.questionFillAnswers[i] === '') {
+            ElementUI.Message.error("第" + (i + 1) + "道填空题没有填写答案！如果要继续交卷，就请选择强制交卷吧！！");
+            flag2 = false;
+            break;
+          }
+          if (i === 0) {
+            answerFillStr = answerFillStr + this.questionFillAnswers[i];
+          } else {
+            answerFillStr = answerFillStr + "," + this.questionFillAnswers[i];
+          }
+        }
+      }
+      if (flag1 === true && flag2 === true) {
+        let param = new URLSearchParams();
+        param.append("userId", sessionStorage.getItem("userId"));
+        param.append("questionSingleStr", answerSingleStr);
+        param.append("questionFillStr", answerFillStr);
+        axios
+          .post('http://localhost/paper/submitPaper', param)
+          .then(function (response) {
+            if (response.data.success) {
+              ElementUI.Message.success("交卷成功！！");
+            }
+          })
+          .catch(function (error) {
+            alert(error);
+            console.log(error);
+          });
+      }
+    },
+    selectSingleAnswer: function (index1, index2) {
+      this.questionSingleAnswers[index1 - 1] = index2;
+    }
+  },
+  mounted() {
+    axios
+      .get('http://localhost/course/getCourseCanTest')
+      .then(response => (this.form.allCourse = response.data.rows))
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+}
+</script>
+
+<style scoped>
+
+</style>
