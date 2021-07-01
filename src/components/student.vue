@@ -82,6 +82,7 @@ export default {
     toSelectPaperPage
   },
   methods: {
+    //注销登录
     logout: function () {
       ElementUI.Message.error("你已退出登录!!");
       window.sessionStorage.clear();

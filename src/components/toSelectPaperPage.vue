@@ -31,16 +31,16 @@
           <span>{{ value2.content }}</span></p>
         <p>
           <span style="color: #55a532">你的答案：</span>
-          <input type="radio" :name="'answerSingle'+'_'+(index+1)" :id="'answerSingle'+'_'+(index+1)+'_1'" value="1"
+          <input type="radio" v-bind:name="'answerSingle'+(index+1)" :id="'answerSingle'+'_'+(index+1)+'_1'" value="1"
                  style="vertical-align:middle;margin-top:-2px;margin-bottom:1px;"
                  @click="selectSingleAnswer(index+1,1)">A
-          <input type="radio" :name="'answerSingle'+'_'+(index+1)" :id="'answerSingle'+'_'+(index+1)+'_2'" value="2"
+          <input type="radio" v-bind:name="'answerSingle'+(index+1)" :id="'answerSingle'+'_'+(index+1)+'_2'" value="2"
                  style="vertical-align:middle;margin-top:-2px;margin-bottom:1px;"
                  @click="selectSingleAnswer(index+1,2)">B
-          <input type="radio" :name="'answerSingle'+'_'+(index+1)" :id="'answerSingle'+'_'+(index+1)+'_3'" value="3"
+          <input type="radio" v-bind:name="'answerSingle'+(index+1)" :id="'answerSingle'+'_'+(index+1)+'_3'" value="3"
                  style="vertical-align:middle;margin-top:-2px;margin-bottom:1px;"
                  @click="selectSingleAnswer(index+1,3)">C
-          <input type="radio" :name="'answerSingle'+'_'+(index+1)" :id="'answerSingle'+'_'+(index+1)+'_4'" value="4"
+          <input type="radio" v-bind:name="'answerSingle'+(index+1)" :id="'answerSingle'+'_'+(index+1)+'_4'" value="4"
                  style="vertical-align:middle;margin-top:-2px;margin-bottom:1px;"
                  @click="selectSingleAnswer(index+1,4)">D
         </p>
@@ -59,8 +59,19 @@
       </div>
       <span slot="footer" class="dialog-footer">
        <el-button type="primary" @click="submitPaper()">交卷</el-button>
-       <el-button type="danger" @click="submitPaperCompulsory()">强制交卷</el-button>
+       <el-button type="danger" @click="dialogVisible3 = true">强制交卷</el-button>
       </span>
+    </el-dialog>
+    <el-dialog
+      title="提示"
+      :visible.sync="dialogVisible3"
+      width="30%"
+      :before-close="handleClose">
+      <span>你确定要强制交卷吗?(即使你有试题未选择或填写答案也会交卷)</span>
+      <span slot="footer" class="dialog-footer">
+    <el-button type="primary" @click="submitPaperCompulsory()">确 定</el-button>
+    <el-button @click="dialogVisible3 = false">取 消</el-button>
+  </span>
     </el-dialog>
     <div style="width: 40%;margin-top: 6%">
       <el-form :model="form" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
@@ -89,6 +100,7 @@ export default {
     return {
       dialogVisible: false,
       dialogVisible2: false,
+      dialogVisible3: false,
       count: '',
       minutes: '',
       seconds: '',
@@ -104,6 +116,7 @@ export default {
     };
   },
   methods: {
+    //打开考试界面
     openDialog: function () {
       if (this.form.courseId === '') {
         ElementUI.Message.error("请选择科目");
@@ -117,6 +130,7 @@ export default {
       }
       this.dialogVisible = true;
     },
+    //创建试卷
     createPaper: function () {
       this.dialogVisible = false;
       this.dialogVisible2 = true;
@@ -138,9 +152,10 @@ export default {
           console.log(error);
         });
     },
+    //系统自动交卷和倒计时
     getCode: function () {
       let _this = this;
-      let TIME_COUNT = 3600;
+      let TIME_COUNT = 10;
       if (this.count === '' || this.count === 0) {
         this.count = TIME_COUNT;
       }
@@ -154,10 +169,46 @@ export default {
           ElementUI.Message.error("考试时间到了，系统自动交卷！");
           _this.dialogVisible2 = false;
           clearInterval(interval);
-          location.reload();
+          let answerSingleStr = '';
+          let answerFillStr = '';
+          for (let i = 0; i < _this.questionSingleAnswers.length; i++) {
+            if (i === 0) {
+              answerSingleStr = answerSingleStr + _this.questionSingleAnswers[i];
+            } else {
+              answerSingleStr = answerSingleStr + "," + _this.questionSingleAnswers[i];
+            }
+          }
+          for (let i = 0; i < _this.questionFillAnswers.length; i++) {
+            if (_this.questionFillAnswers[i] === '') {
+              _this.questionFillAnswers[i] = 'answerIsNull';
+            }
+            if (i === 0) {
+              answerFillStr = answerFillStr + _this.questionFillAnswers[i];
+            } else {
+              answerFillStr = answerFillStr + "," + _this.questionFillAnswers[i];
+            }
+          }
+          let param = new URLSearchParams();
+          param.append("userId", sessionStorage.getItem("userId"));
+          param.append("questionSingleStr", answerSingleStr);
+          param.append("questionFillStr", answerFillStr);
+          axios
+            .post('http://localhost/paper/submitPaper', param)
+            .then(function (response) {
+              if (response.data.success) {
+              }
+            })
+            .catch(function (error) {
+              alert(error);
+              console.log(error);
+            });
+          setTimeout(function () {
+            location.reload();
+          }, 1500);
         }
       }, 1000);
     },
+    //交卷(要完成全部试题)
     submitPaper: function () {
       let answerSingleStr = '';
       let answerFillStr = '';
@@ -190,6 +241,7 @@ export default {
         }
       }
       if (flag1 === true && flag2 === true) {
+        let _this = this;
         let param = new URLSearchParams();
         param.append("userId", sessionStorage.getItem("userId"));
         param.append("questionSingleStr", answerSingleStr);
@@ -199,17 +251,61 @@ export default {
           .then(function (response) {
             if (response.data.success) {
               ElementUI.Message.success("交卷成功！！");
+              _this.dialogVisible2 = false;
+              setTimeout(function () {
+                location.reload();
+              }, 1500);
             }
-          })
-          .catch(function (error) {
-            alert(error);
-            console.log(error);
           });
       }
     },
+    //强制交卷(有试题未完成也交卷)
+    submitPaperCompulsory: function () {
+      let answerSingleStr = '';
+      let answerFillStr = '';
+      for (let i = 0; i < this.questionSingleAnswers.length; i++) {
+        if (i === 0) {
+          answerSingleStr = answerSingleStr + this.questionSingleAnswers[i];
+        } else {
+          answerSingleStr = answerSingleStr + "," + this.questionSingleAnswers[i];
+        }
+      }
+      for (let i = 0; i < this.questionFillAnswers.length; i++) {
+        if (this.questionFillAnswers[i] === '') {
+          this.questionFillAnswers[i] = 'answerIsNull';
+        }
+        if (i === 0) {
+          answerFillStr = answerFillStr + this.questionFillAnswers[i];
+        } else {
+          answerFillStr = answerFillStr + "," + this.questionFillAnswers[i];
+        }
+      }
+      let _this = this;
+      let param = new URLSearchParams();
+      param.append("userId", sessionStorage.getItem("userId"));
+      param.append("questionSingleStr", answerSingleStr);
+      param.append("questionFillStr", answerFillStr);
+      axios
+        .post('http://localhost/paper/submitPaper', param)
+        .then(function (response) {
+          if (response.data.success) {
+            ElementUI.Message.success("强制交卷成功！！");
+            _this.dialogVisible3 = false;
+            _this.dialogVisible2 = false;
+            setTimeout(function () {
+              location.reload();
+            }, 1500);
+          }
+        })
+        .catch(function (error) {
+          alert(error);
+          console.log(error);
+        });
+    },
+    //点击radio单选框时更新questionSingleAnswers数组的值
     selectSingleAnswer: function (index1, index2) {
       this.questionSingleAnswers[index1 - 1] = index2;
-    }
+    },
   },
   mounted() {
     axios

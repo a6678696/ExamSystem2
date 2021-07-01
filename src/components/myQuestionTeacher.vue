@@ -161,6 +161,7 @@ export default {
     }
   },
   methods: {
+    //查看试题详情
     handleDetails: function (id) {
       let _this = this;
       let param = new URLSearchParams();
@@ -191,10 +192,12 @@ export default {
         });
       this.dialogFormVisible = true;
     },
+    //确认是否要删除试题
     openDiglog: function (id) {
       this.dialogVisible2 = true;
       sessionStorage.setItem("deleteQuestionId", id);
     },
+    //打开修改试题界面
     openModifyDiglog: function (id) {
       this.dialogFormVisible2 = true;
       let _this = this;
@@ -228,6 +231,7 @@ export default {
         });
       sessionStorage.setItem("modifyId", id);
     },
+    //修改试题
     modifyQuestion: function () {
       let _this = this;
       let questionId = sessionStorage.getItem("modifyId");
@@ -261,6 +265,7 @@ export default {
           console.log(error);
         });
     },
+    //删除试题
     deleteQuestion: function () {
       let id = sessionStorage.getItem("deleteQuestionId");
       let _this = this;
@@ -279,6 +284,7 @@ export default {
           console.log(error);
         });
     },
+    //搜索试题
     searchQuestion: function () {
       let _this = this;
       let param = new URLSearchParams();
@@ -298,14 +304,17 @@ export default {
           console.log(error);
         });
     },
+    //重置搜索试题条件
     resetValue: function () {
       this.formSearch.searchContent = '';
       this.formSearch.searchCourseId = '';
     },
+    //刷新当前页的值
     handleCurrentChange(page) {
       this.pagination.page = page;
       this.reloadData();
     },
+    //刷新数据
     reloadData: function () {
       axios
         .get('http://localhost/question/getMyQuestion?userId=' + sessionStorage.getItem("userId") + '&page=' + this.pagination.page + '&size=' + this.pagination.size)

@@ -49,6 +49,7 @@ export default {
     }
   },
   methods: {
+    //添加填空题
     addQuestionFill: function () {
       let _this = this;
       let param = new URLSearchParams();

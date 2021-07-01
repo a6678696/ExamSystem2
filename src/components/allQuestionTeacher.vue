@@ -103,6 +103,7 @@ export default {
     }
   },
   methods: {
+    //查看试题详情
     handleDetails: function (id) {
       let _this = this;
       let param = new URLSearchParams();
@@ -133,6 +134,7 @@ export default {
         });
       this.dialogFormVisible = true;
     },
+    //所属试题
     searchQuestion: function () {
       let _this = this;
       let param = new URLSearchParams();
@@ -151,14 +153,17 @@ export default {
           console.log(error);
         });
     },
+    //重置搜索条件
     allQuestionTeacherResetValue: function () {
       this.formSearch.searchContent = '';
       this.formSearch.searchCourseId = '';
     },
+    //刷新当前页的值
     handleCurrentChange(page) {
       this.pagination.page = page;
       this.reloadData();
     },
+    //刷新数据
     reloadData: function () {
       axios
         .get('http://localhost/question/getAllQuestion?page=' + this.pagination.page + '&size=' + this.pagination.size)

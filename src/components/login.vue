@@ -50,6 +50,7 @@ export default {
     }
   },
   methods: {
+    //登录
     onSubmit() {
       if (this.form.userName === null || this.form.userName === '') {
         alert("请输入用户名!");

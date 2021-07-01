@@ -63,6 +63,7 @@ export default {
     }
   },
   methods: {
+    //修改密码
     modifyPassword: function () {
       if (this.form.password !== this.form.password2) {
         ElementUI.Message.error("新密码和确认密码不一致，请重新输入！！");
