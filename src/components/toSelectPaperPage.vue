@@ -18,44 +18,47 @@
       fullscreen="fullscreen"
       :show-close="false"
       :before-close="handleClose">
-      <p>当前考试的科目是：<span style="color: red">{{ this.form.courseName }}</span>，剩余考试时间：<span
-        style="color: red"><span v-show="count>=59">{{ minutes }}分</span>{{ seconds }}秒</span>，考试结束时间如果到了系统将强制自动交卷</p>
-      <hr>
-      <strong style="font-size: 17px">一、选择题，每题5分，共15题，总分75分。(剩余考试时间：<span
-        style="color: red"><span v-show="count>=59">{{ minutes }}分</span>{{ seconds }}秒</span>)</strong>
-      <div v-for="(value,index) in questionSingleList">
-        <p style="color: blue;font-size: 15px">第{{ index + 1 }}题：</p>
-        <p style="font-size: 15px">{{ value.question.content }}</p>
-        <p v-for="(value2,index2) in value.answerList">
-          {{ index2 === 0 ? 'A' : (index2 === 1 ? 'B' : (index2 === 2 ? 'C' : 'D')) }}、
-          <span>{{ value2.content }}</span></p>
-        <p>
-          <span style="color: #55a532">你的答案：</span>
-          <input type="radio" v-bind:name="'answerSingle'+(index+1)" :id="'answerSingle'+'_'+(index+1)+'_1'" value="1"
-                 style="vertical-align:middle;margin-top:-2px;margin-bottom:1px;"
-                 @click="selectSingleAnswer(index+1,1)">A
-          <input type="radio" v-bind:name="'answerSingle'+(index+1)" :id="'answerSingle'+'_'+(index+1)+'_2'" value="2"
-                 style="vertical-align:middle;margin-top:-2px;margin-bottom:1px;"
-                 @click="selectSingleAnswer(index+1,2)">B
-          <input type="radio" v-bind:name="'answerSingle'+(index+1)" :id="'answerSingle'+'_'+(index+1)+'_3'" value="3"
-                 style="vertical-align:middle;margin-top:-2px;margin-bottom:1px;"
-                 @click="selectSingleAnswer(index+1,3)">C
-          <input type="radio" v-bind:name="'answerSingle'+(index+1)" :id="'answerSingle'+'_'+(index+1)+'_4'" value="4"
-                 style="vertical-align:middle;margin-top:-2px;margin-bottom:1px;"
-                 @click="selectSingleAnswer(index+1,4)">D
-        </p>
-      </div>
-      <strong style="font-size: 17px">二、填空题，每题5分，共5题，总分25分。(剩余考试时间：<span
-        style="color: red"><span v-show="count>=59">{{ minutes }}分</span>{{ seconds }}秒</span>)</strong>
-      <div v-for="(value,index) in questionFillList">
-        <p style="color: blue;font-size: 15px">第{{ index + 1 }}题：
-        </p>
-        <p style="font-size: 15px">{{ value.question.content }}</p>
-        <p>
-          <span style="color: #55a532">你的答案：</span><input type="text" style="width: 44%"
-                                                          v-model="questionFillAnswers[index]"
-                                                          :id="'answerFill'+'_'+(index+1)">
-        </p>
+      <div style="margin-left: 10%">
+        <p>当前考试的科目是：<span style="color: red">{{ this.form.courseName }}</span>，剩余考试时间：<span
+          style="color: red"><span v-show="count>=59">{{ minutes }}分</span>{{ seconds }}秒</span>，考试结束时间如果到了系统将强制自动交卷</p>
+        <hr>
+        <strong style="font-size: 17px">一、选择题，每题5分，共15题，总分75分。(剩余考试时间：<span
+          style="color: red"><span v-show="count>=59">{{ minutes }}分</span>{{ seconds }}秒</span>)</strong>
+        <div v-for="(value,index) in questionSingleList">
+          <p style="font-size: 15px"><span style="color: blue;font-size: 15px">第{{
+              index + 1
+            }}题：</span>{{ value.question.content }}</p>
+          <p v-for="(value2,index2) in value.answerList">
+            {{ index2 === 0 ? 'A' : (index2 === 1 ? 'B' : (index2 === 2 ? 'C' : 'D')) }}、
+            <span>{{ value2.content }}</span></p>
+          <p>
+            <span style="color: #55a532">你的答案：</span>
+            <input type="radio" v-bind:name="'answerSingle'+(index+1)" :id="'answerSingle'+'_'+(index+1)+'_1'" value="1"
+                   style="vertical-align:middle;margin-top:-2px;margin-bottom:1px;"
+                   @click="selectSingleAnswer(index+1,1)">A
+            <input type="radio" v-bind:name="'answerSingle'+(index+1)" :id="'answerSingle'+'_'+(index+1)+'_2'" value="2"
+                   style="vertical-align:middle;margin-top:-2px;margin-bottom:1px;"
+                   @click="selectSingleAnswer(index+1,2)">B
+            <input type="radio" v-bind:name="'answerSingle'+(index+1)" :id="'answerSingle'+'_'+(index+1)+'_3'" value="3"
+                   style="vertical-align:middle;margin-top:-2px;margin-bottom:1px;"
+                   @click="selectSingleAnswer(index+1,3)">C
+            <input type="radio" v-bind:name="'answerSingle'+(index+1)" :id="'answerSingle'+'_'+(index+1)+'_4'" value="4"
+                   style="vertical-align:middle;margin-top:-2px;margin-bottom:1px;"
+                   @click="selectSingleAnswer(index+1,4)">D
+          </p>
+        </div>
+        <strong style="font-size: 17px">二、填空题，每题5分，共5题，总分25分。(剩余考试时间：<span
+          style="color: red"><span v-show="count>=59">{{ minutes }}分</span>{{ seconds }}秒</span>)</strong>
+        <div v-for="(value,index) in questionFillList">
+          <p style="font-size: 15px"><span style="color: blue;font-size: 15px">第{{
+              index + 1
+            }}题：</span>{{ value.question.content }}</p>
+          <p>
+            <span style="color: #55a532">你的答案：</span><input type="text" style="width: 44%"
+                                                            v-model="questionFillAnswers[index]"
+                                                            :id="'answerFill'+'_'+(index+1)">
+          </p>
+        </div>
       </div>
       <span slot="footer" class="dialog-footer">
        <el-button type="primary" @click="submitPaper()">交卷</el-button>
@@ -155,7 +158,7 @@ export default {
     //系统自动交卷和倒计时
     getCode: function () {
       let _this = this;
-      let TIME_COUNT = 10;
+      let TIME_COUNT = 3600;
       if (this.count === '' || this.count === 0) {
         this.count = TIME_COUNT;
       }

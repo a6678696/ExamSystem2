@@ -17,7 +17,7 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item style="text-align: center">
-        <el-button type="primary" @click="onSubmit">登录</el-button>
+        <el-button type="primary" @click="onSubmit()">登录</el-button>
         <router-link type="primary" to="/register">
           <el-button type="primary">注册</el-button>
         </router-link>

@@ -33,7 +33,7 @@
                 :collapse="isCollapse">
                 <el-menu-item index="1">
                   <i class="el-icon-myScore"></i>
-                  <span slot="title">查看成绩</span>
+                  <span slot="title"><a @click="currentCom='viewMyPaper'">查看成绩</a></span>
                 </el-menu-item>
                 <el-menu-item index="2">
                   <i class="el-icon-myTest"></i>
@@ -65,6 +65,7 @@
 import ElementUI from "element-ui";
 import toModifyPassword from "./toModifyPassword";
 import toSelectPaperPage from "./toSelectPaperPage";
+import viewMyPaper from "./viewMyPaper";
 
 export default {
   name: "student",
@@ -79,7 +80,8 @@ export default {
   },
   components: {
     toModifyPassword,
-    toSelectPaperPage
+    toSelectPaperPage,
+    viewMyPaper
   },
   methods: {
     //注销登录
