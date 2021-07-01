@@ -46,6 +46,17 @@
     <el-button type="primary" @click="dialogVisible = false">关闭</el-button>
   </span>
     </el-dialog>
+    <!--搜索-->
+    <el-form :inline="true" :model="formSearch" class="demo-form-inline">
+      <el-form-item label="考生用户名">
+        <el-input v-model="formSearch.userName" placeholder="考生用户名"
+                  style="width: 300px"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="searchPaper()">查询</el-button>
+        <el-button type="info" @click="resetValue()">重置</el-button>
+      </el-form-item>
+    </el-form>
     <el-table
       :data="myPaper.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%">
@@ -108,6 +119,9 @@ export default {
         page: 1,
         size: 8,
         count: 0,
+      },
+      formSearch: {
+        userName: ''
       }
     }
   },
@@ -138,6 +152,18 @@ export default {
       axios
         .get('http://localhost/paper/getListFindByUserId?page=' + this.pagination.page + '&size=' + this.pagination.size)
         .then(response => (this.myPaper = response.data.rows, this.pagination.count = response.data.total))
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    resetValue: function () {
+      this.formSearch.userName = '';
+    },
+    searchPaper: function () {
+      let _this=this;
+      axios
+        .get('http://localhost/paper/getListFindByUserName?page=' + this.pagination.page + '&size=' + this.pagination.size+'&userName='+this.formSearch.userName)
+        .then(response => (this.myPaper = response.data.rows, this.pagination.count = response.data.total,_this.searchPaper()))
         .catch(function (error) {
           console.log(error);
         });
