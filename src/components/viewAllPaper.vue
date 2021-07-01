@@ -58,6 +58,10 @@
         prop="courseName" align="center" sortable>
       </el-table-column>
       <el-table-column
+        label="考生用户名"
+        prop="userName" align="center" sortable>
+      </el-table-column>
+      <el-table-column
         label="分数"
         prop="score" align="center" sortable>
       </el-table-column>

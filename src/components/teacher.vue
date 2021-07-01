@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p><img src="../assets/images/logo.png" height="55"/><span style="float: right">当前用户&nbsp;:&nbsp;<span style="color: red">{{ currentUserName }}</span>&nbsp;&nbsp;&nbsp;当前身份&nbsp;:&nbsp;<span style="color: red">{{currentType }}</span></span></p>
+    <p><img src="../assets/images/logo.png" height="55"/><span style="float: right;margin-top: 20px"><el-tag effect="plain">当前用户&nbsp;:&nbsp;<span style="color: red">{{ currentUserName }}</span></el-tag>&nbsp;&nbsp;&nbsp;<el-tag effect="plain">当前身份&nbsp;:&nbsp;<span style="color: red">{{currentType }}</span></el-tag></span></p>
     <el-dialog
       title="提示"
       :visible.sync="dialogVisible"
@@ -45,7 +45,7 @@
                   <el-submenu index="2-2">
                     <template slot="title"><i class="el-icon-mySearch"></i>查看试题</template>
                     <el-menu-item index="2-2-1"><i class="el-icon-myAllQuestion"></i><a @click="currentCom='allQuestionTeacher'">全部试题</a></el-menu-item>
-                    <el-menu-item index="2-2-2"><i class="el-icon-myQuestion"></i><a @click="currentCom='myQuestionTeacher'">我的试题</a></el-menu-item>
+                    <el-menu-item index="2-2-2"><i class="el-icon-myQuestion"></i><a @click="currentCom='myQuestion'">我的试题</a></el-menu-item>
                   </el-submenu>
                 </el-submenu>
                 <el-menu-item index="3">
@@ -77,7 +77,7 @@ import toModifyPassword from "./toModifyPassword";
 import addQuestionSingle from "./addQuestionSingle ";
 import addQuestionFill from "./addQuestionFill";
 import allQuestionTeacher from "./allQuestionTeacher";
-import myQuestionTeacher from "./myQuestionTeacher";
+import myQuestion from "./myQuestion";
 import viewAllPaper from "./viewAllPaper";
 
 export default {
@@ -96,7 +96,7 @@ export default {
     addQuestionSingle,
     addQuestionFill,
     allQuestionTeacher,
-    myQuestionTeacher,
+    myQuestion,
     viewAllPaper
   },
   methods: {

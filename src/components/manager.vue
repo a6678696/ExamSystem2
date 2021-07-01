@@ -29,30 +29,34 @@
                 @close="handleClose"
                 :collapse="isCollapse">
                 <el-menu-item index="1">
+                  <i class="el-icon-myUser"></i>
+                  <span slot="title"><a @click="currentCom='userManage'">用户管理</a></span>
+                </el-menu-item>
+                <el-menu-item index="2">
                   <i class="el-icon-myScore"></i>
                   <span slot="title"><a @click="currentCom='viewAllPaper'">查看学生成绩</a></span>
                 </el-menu-item>
-                <el-submenu index="2">
+                <el-submenu index="3">
                   <template slot="title">
                     <i class="el-icon-myPaper"></i>
                     <span>试题管理</span>
                   </template>
-                  <el-submenu index="2-1">
+                  <el-submenu index="3-1">
                     <template slot="title"><i class="el-icon-myAdd"></i>添加试题</template>
-                    <el-menu-item index="2-1-1"><i class="el-icon-myOne"></i><a @click="currentCom='addQuestionSingle'">单选题</a></el-menu-item>
-                    <el-menu-item index="2-1-2"><i class="el-icon-myFill"></i><a @click="currentCom='addQuestionFill'">填空题</a></el-menu-item>
+                    <el-menu-item index="3-1-1"><i class="el-icon-myOne"></i><a @click="currentCom='addQuestionSingle'">单选题</a></el-menu-item>
+                    <el-menu-item index="3-1-2"><i class="el-icon-myFill"></i><a @click="currentCom='addQuestionFill'">填空题</a></el-menu-item>
                   </el-submenu>
-                  <el-submenu index="2-2">
+                  <el-submenu index="3-2">
                     <template slot="title"><i class="el-icon-mySearch"></i>查看试题</template>
-                    <el-menu-item index="2-2-1"><i class="el-icon-myAllQuestion"></i><a @click="currentCom='allQuestionManager'">全部试题</a></el-menu-item>
-                    <el-menu-item index="2-2-2"><i class="el-icon-myQuestion"></i><a @click="currentCom='myQuestionTeacher'">我的试题</a></el-menu-item>
+                    <el-menu-item index="3-2-1"><i class="el-icon-myAllQuestion"></i><a @click="currentCom='allQuestionManager'">全部试题</a></el-menu-item>
+                    <el-menu-item index="3-2-2"><i class="el-icon-myQuestion"></i><a @click="currentCom='myQuestion'">我的试题</a></el-menu-item>
                   </el-submenu>
                 </el-submenu>
-                <el-menu-item index="3">
+                <el-menu-item index="4">
                   <i class="el-icon-modifyPassword"></i>
                   <span slot="title"><a @click="currentCom='toModifyPassword'">修改密码</a></span>
                 </el-menu-item>
-                <el-menu-item index="4">
+                <el-menu-item index="5">
                   <i class="el-icon-switch-button"></i>
                   <span slot="title"><a @click="dialogVisible = true">注销</a></span>
                 </el-menu-item>
@@ -76,8 +80,10 @@ import toModifyPassword from "./toModifyPassword";
 import addQuestionSingle from "./addQuestionSingle ";
 import addQuestionFill from "./addQuestionFill";
 import allQuestionManager from "./allQuestionManager";
-import myQuestionTeacher from "./myQuestionTeacher";
+import myQuestion from "./myQuestion";
 import viewAllPaper from "./viewAllPaper";
+import userManage from "./userManage";
+
 export default {
   name: "manager",
   data(){
@@ -94,8 +100,9 @@ export default {
     addQuestionSingle,
     addQuestionFill,
     allQuestionManager,
-    myQuestionTeacher,
-    viewAllPaper
+    myQuestion,
+    viewAllPaper,
+    userManage
   },
   methods:{
     logout: function () {

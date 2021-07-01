@@ -1,9 +1,6 @@
 <template>
   <div>
-    <p><img src="../assets/images/logo.png" height="55"/><span style="float: right">当前用户&nbsp;:&nbsp;<span
-      style="color: red">{{
-        currentUserName
-      }}</span>&nbsp;&nbsp;&nbsp;当前身份&nbsp;:&nbsp;<span style="color: red">{{ currentType }}</span></span></p>
+    <p><img src="../assets/images/logo.png" height="55"/><span style="float: right;margin-top: 20px"><el-tag effect="plain">当前用户&nbsp;:&nbsp;<span style="color: red">{{ currentUserName }}</span></el-tag>&nbsp;&nbsp;&nbsp;<el-tag effect="plain">当前身份&nbsp;:&nbsp;<span style="color: red">{{currentType }}</span></el-tag></span></p>
     <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
       <el-button @click="isCollapse=false" size="mini" v-show="isCollapse">展开菜单栏</el-button>
       <el-button @click="isCollapse=true" size="mini" v-show="!isCollapse">收起菜单栏</el-button>

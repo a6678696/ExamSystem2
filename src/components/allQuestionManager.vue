@@ -99,11 +99,11 @@
           </el-button>
           <el-button
             size="mini" type="warning"
-            @click="openModifyDiglog(scope.row.id)">修改
+            @click="openModifyDialog(scope.row.id)">修改
           </el-button>
           <el-button
             size="mini" type="danger"
-            @click="openDiglog(scope.row.id)">删除
+            @click="openDialog(scope.row.id)">删除
           </el-button>
         </template>
       </el-table-column>
@@ -126,7 +126,7 @@ import axios from "axios";
 import ElementUI from "element-ui";
 
 export default {
-  name: "myQuestionTeacher",
+  name: "allQuestionManager",
   data() {
     return {
       myQuestion: null,
@@ -193,12 +193,12 @@ export default {
       this.dialogFormVisible = true;
     },
     //确认是否要删除试题
-    openDiglog: function (id) {
+    openDialog: function (id) {
       this.dialogVisible2 = true;
       sessionStorage.setItem("deleteQuestionId", id);
     },
     //打开修改试题界面
-    openModifyDiglog: function (id) {
+    openModifyDialog: function (id) {
       this.dialogFormVisible2 = true;
       let _this = this;
       let param = new URLSearchParams();
