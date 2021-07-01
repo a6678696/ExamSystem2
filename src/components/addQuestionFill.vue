@@ -1,13 +1,5 @@
 <template>
   <div>
-    <p>
-      <el-breadcrumb separator-class="el-icon-arrow-right">
-        <el-breadcrumb-item><strong>教师端</strong></el-breadcrumb-item>
-        <el-breadcrumb-item>试题管理</el-breadcrumb-item>
-        <el-breadcrumb-item>添加试题</el-breadcrumb-item>
-        <el-breadcrumb-item>填空题</el-breadcrumb-item>
-      </el-breadcrumb>
-    </p>
     <div style="width: 80%;margin-left: -10%">
       <el-form ref="form" :model="fromAddQuestionFill" :rules="rules" label-width="80px" class="demo-ruleForm">
         <el-form-item label="问题描述" prop="content">

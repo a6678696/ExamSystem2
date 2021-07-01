@@ -23,8 +23,8 @@
               {{ index2 === 0 ? 'A' : (index2 === 1 ? 'B' : (index2 === 2 ? 'C' : 'D')) }}、
               <span>{{ value2.content }}</span>
             </p>
-            <p>你的答案：
-              <strong style="color: blue" v-if="value.answer==='0'">本题你没有选择答案</strong>
+            <p>考生答案：
+              <strong style="color: blue" v-if="value.answer==='0'">本题没有选择答案</strong>
               <strong style="color: blue" v-if="value.answer==='1'">A</strong>
               <strong style="color: blue" v-if="value.answer==='2'">B</strong>
               <strong style="color: blue" v-if="value.answer==='3'">C</strong>
@@ -38,8 +38,8 @@
               index + 1
             }}题：</span>{{ value.question.content }}</p>
           <p>正确答案：<strong style="color: green">{{ value.trueAnswerStr }}</strong></p>
-          <p>你的答案：<strong
-            style="color: blue">{{ value.answer === 'answerIsNull' ? '本题你没有填写答案' : value.answer }}</strong></p>
+          <p>考生答案：<strong
+            style="color: blue">{{ value.answer === 'answerIsNull' ? '本题没有填写答案' : value.answer }}</strong></p>
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
@@ -88,7 +88,7 @@
 import axios from "axios";
 
 export default {
-  name: "viewMyPaper",
+  name: "viewAllPaper",
   data() {
     return {
       myPaper: null,
@@ -132,8 +132,8 @@ export default {
     //刷新页面数据
     reloadData: function () {
       axios
-        .get('http://localhost/paper/getListFindByUserId?userId=' + sessionStorage.getItem("userId") + '&page=' + this.pagination.page + '&size=' + this.pagination.size)
-        .then(response => (this.myPaper = response.data.rows))
+        .get('http://localhost/paper/getListFindByUserId?page=' + this.pagination.page + '&size=' + this.pagination.size)
+        .then(response => (this.myPaper = response.data.rows, this.pagination.count = response.data.total))
         .catch(function (error) {
           console.log(error);
         });
@@ -141,7 +141,7 @@ export default {
   },
   mounted() {
     axios
-      .get('http://localhost/paper/getListFindByUserId?userId=' + sessionStorage.getItem("userId") + '&page=' + this.pagination.page + '&size=' + this.pagination.size)
+      .get('http://localhost/paper/getListFindByUserId?page=' + this.pagination.page + '&size=' + this.pagination.size)
       .then(response => (this.myPaper = response.data.rows, this.pagination.count = response.data.total))
       .catch(function (error) {
         console.log(error);

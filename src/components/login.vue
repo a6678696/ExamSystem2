@@ -53,11 +53,11 @@ export default {
     //登录
     onSubmit() {
       if (this.form.userName === null || this.form.userName === '') {
-        alert("请输入用户名!");
+        ElementUI.Message.error("请输入用户名!");
         return null;
       }
       if (this.form.password === null || this.form.password === '') {
-        alert("请输入密码!");
+        ElementUI.Message.error("请输入密码!");
         return null;
       }
       let _this = this;

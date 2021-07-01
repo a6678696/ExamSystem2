@@ -30,7 +30,7 @@
                 :collapse="isCollapse">
                 <el-menu-item index="1">
                   <i class="el-icon-myScore"></i>
-                  <span slot="title">查看学生成绩</span>
+                  <span slot="title"><a @click="currentCom='viewAllPaper'">查看学生成绩</a></span>
                 </el-menu-item>
                 <el-submenu index="2">
                   <template slot="title">
@@ -78,6 +78,7 @@ import addQuestionSingle from "./addQuestionSingle ";
 import addQuestionFill from "./addQuestionFill";
 import allQuestionTeacher from "./allQuestionTeacher";
 import myQuestionTeacher from "./myQuestionTeacher";
+import viewAllPaper from "./viewAllPaper";
 
 export default {
   name: "teacher",
@@ -95,7 +96,8 @@ export default {
     addQuestionSingle,
     addQuestionFill,
     allQuestionTeacher,
-    myQuestionTeacher
+    myQuestionTeacher,
+    viewAllPaper
   },
   methods: {
     //注销
