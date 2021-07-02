@@ -19,6 +19,46 @@
     <el-button type="danger" @click="dialogVisibleAdd = false">取消</el-button>
       </span>
     </el-dialog>
+    <!--查看科目-->
+    <el-dialog
+      title="查看科目"
+      :visible.sync="dialogVisibleDetails"
+      width="30%"
+      :before-close="handleClose">
+      <el-form ref="form" :model="formDetails" label-width="80px">
+        <el-form-item label="名称">
+          <el-input v-model="formDetails.name" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="考试时间">
+          <el-input v-model="formDetails.minutes" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="试题数量">
+          <el-input v-model="formDetails.num" disabled></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+    <el-button type="danger" @click="dialogVisibleDetails = false">关闭</el-button>
+      </span>
+    </el-dialog>
+    <!--修改科目-->
+    <el-dialog
+      title="修改科目"
+      :visible.sync="dialogVisibleModify"
+      width="30%"
+      :before-close="handleClose">
+      <el-form ref="form" :model="formModify" label-width="80px">
+        <el-form-item label="名称">
+          <el-input v-model="formModify.name"></el-input>
+        </el-form-item>
+        <el-form-item label="考试时间">
+          <el-input v-model="formModify.minutes" placeholder="分钟"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+    <el-button type="primary" @click="updateCourse()">修改</el-button>
+    <el-button type="danger" @click="dialogVisibleModify = false">取消</el-button>
+      </span>
+    </el-dialog>
     <!--删除科目-->
     <el-dialog
       title="提示"
@@ -103,6 +143,8 @@ export default {
       courseList: null,
       dialogVisibleAdd: false,
       dialogVisibleDelete: false,
+      dialogVisibleDetails: false,
+      dialogVisibleModify: false,
       deleteId: 0,
       pagination: {
         page: 1,
@@ -113,6 +155,16 @@ export default {
         name: ''
       },
       formAdd: {
+        name: '',
+        minutes: ''
+      },
+      formDetails: {
+        name: '',
+        minutes: '',
+        num: ''
+      },
+      formModify: {
+        id: '',
         name: '',
         minutes: ''
       }
@@ -156,6 +208,7 @@ export default {
     resetValue: function () {
       this.formSearch.name = '';
     },
+    //添加科目
     addCourse: function () {
       let _this = this;
       let param = new URLSearchParams();
@@ -173,10 +226,12 @@ export default {
           }
         })
     },
+    //打开删除确认框
     openDeleteDialog: function (id) {
       this.deleteId = id;
       this.dialogVisibleDelete = true;
     },
+    //删除科目
     deleteCourse: function () {
       let _this = this;
       let param = new URLSearchParams();
@@ -195,6 +250,56 @@ export default {
             _this.dialogVisibleDelete = false;
           }
         })
+    },
+    //查看科目详情
+    openDetailsDialog: function (id) {
+      this.dialogVisibleDetails = true;
+      let _this = this;
+      axios
+        .get('http://localhost/course/findById?id=' + id)
+        .then(function (response) {
+          _this.formDetails.name = response.data.course.name;
+          _this.formDetails.minutes = response.data.course.minutes;
+          _this.formDetails.num = response.data.course.num;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    //打开科目修改框
+    openModifyDialog: function (id) {
+      this.dialogVisibleModify = true;
+      this.formModify.id = id;
+      let _this = this;
+      axios
+        .post('http://localhost/course/findById?id=' + id)
+        .then(function (response) {
+          _this.formModify.name = response.data.course.name;
+          _this.formModify.minutes = response.data.course.minutes;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    //修改科目
+    updateCourse: function () {
+      let _this=this;
+      let param = new URLSearchParams();
+      param.append("id", this.formModify.id);
+      param.append("name", this.formModify.name);
+      param.append("minutes", this.formModify.minutes);
+      axios
+        .post('http://localhost/course/update', param)
+        .then(function (response) {
+          if (response.data.success) {
+            ElementUI.Message.success("修改科目成功!!");
+            _this.reloadData();
+            _this.dialogVisibleModify = false;
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
   },
   mounted() {

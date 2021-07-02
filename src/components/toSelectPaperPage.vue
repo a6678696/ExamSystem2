@@ -160,9 +160,9 @@ export default {
     getCode: function () {
       let _this = this;
       axios
-        .get('http://localhost/course/getMinutesById?id=' + this.form.courseId)
+        .get('http://localhost/course/findById?id=' + this.form.courseId)
         .then(function (response) {
-          _this.testMinutes = response.data.minutes;
+          _this.testMinutes = response.data.course.minutes;
           ElementUI.Message.warning("本场考试时间为: " + _this.testMinutes + " 分钟");
           let TIME_COUNT = _this.testMinutes * 60;
           if (_this.count === '' || _this.count === 0) {
