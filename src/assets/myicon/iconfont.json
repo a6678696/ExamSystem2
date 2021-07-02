@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "12559063",
+      "name": "科目管理",
+      "font_class": "myCourse",
+      "unicode": "e63c",
+      "unicode_decimal": 58940
+    },
+    {
       "icon_id": "6246304",
       "name": "用户",
       "font_class": "myUser",

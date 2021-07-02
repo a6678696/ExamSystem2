@@ -107,6 +107,7 @@ export default {
       count: '',
       minutes: '',
       seconds: '',
+      testMinutes: 10,
       questionSingleList: null,
       questionFillList: null,
       questionSingleAnswers: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -158,10 +159,19 @@ export default {
     //系统自动交卷和倒计时
     getCode: function () {
       let _this = this;
-      let TIME_COUNT = 3600;
-      if (this.count === '' || this.count === 0) {
-        this.count = TIME_COUNT;
-      }
+      axios
+        .get('http://localhost/course/getMinutesById?id=' + this.form.courseId)
+        .then(function (response) {
+          _this.testMinutes = response.data.minutes;
+          ElementUI.Message.warning("本场考试时间为: " + _this.testMinutes + " 分钟");
+          let TIME_COUNT = _this.testMinutes * 60;
+          if (_this.count === '' || _this.count === 0) {
+            _this.count = TIME_COUNT;
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
       let interval = setInterval(function () {
         //Math.floor去整数
         _this.minutes = Math.floor(_this.count / 60);
