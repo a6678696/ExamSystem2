@@ -210,6 +210,14 @@ export default {
     },
     //添加科目
     addCourse: function () {
+      if (this.formAdd.name === null || this.formAdd.name === '') {
+        ElementUI.Message.error("请输入科目名称!");
+        return null;
+      }
+      if (this.formAdd.minutes === null || this.formAdd.minutes === '') {
+        ElementUI.Message.error("请输入考试时间!");
+        return null;
+      }
       let _this = this;
       let param = new URLSearchParams();
       param.append("name", this.formAdd.name);
@@ -283,6 +291,14 @@ export default {
     },
     //修改科目
     updateCourse: function () {
+      if (this.formModify.name === null || this.formModify.name === '') {
+        ElementUI.Message.error("请输入科目名称!");
+        return null;
+      }
+      if (this.formModify.minutes === null || this.formModify.minutes === '') {
+        ElementUI.Message.error("请输入考试时间!");
+        return null;
+      }
       let _this=this;
       let param = new URLSearchParams();
       param.append("id", this.formModify.id);

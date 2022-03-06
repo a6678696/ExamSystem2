@@ -1,7 +1,7 @@
 <template>
   <div>
     <div style="width: 80%;margin-left: -10%">
-      <el-form ref="form" :model="fromAddQuestionFill" :rules="rules" label-width="80px" class="demo-ruleForm">
+      <el-form ref="form" :model="fromAddQuestionFill" :rules="rules" rel="fromAddQuestionFill" label-width="80px" class="demo-ruleForm">
         <el-form-item label="问题描述" prop="content">
           <el-input v-model="fromAddQuestionFill.content" type="textarea"></el-input>
         </el-form-item>
@@ -37,12 +37,35 @@ export default {
         allCourse: null,
         type:'填空题',
         userId: sessionStorage.getItem("userId")
+      },
+      rules:{
+        content: [
+          {required: true, message: '请输入问题描述', trigger: 'blur'},
+        ],
+        answer: [
+          {required: true, message: '请输入答案', trigger: 'blur'}
+        ],
+        courseId: [
+          {required: true, message: '请选择科目', trigger: 'blur'}
+        ]
       }
     }
   },
   methods: {
     //添加填空题
     addQuestionFill: function () {
+      if (this.fromAddQuestionFill.content === null || this.fromAddQuestionFill.content === '') {
+        ElementUI.Message.error("请输入问题描述!");
+        return null;
+      }
+      if (this.fromAddQuestionFill.courseId === null || this.fromAddQuestionFill.courseId === '') {
+        ElementUI.Message.error("请选择科目!");
+        return null;
+      }
+      if (this.fromAddQuestionFill.answer === null || this.fromAddQuestionFill.answer === '') {
+        ElementUI.Message.error("请输入答案!");
+        return null;
+      }
       let _this = this;
       let param = new URLSearchParams();
       param.append("content", this.fromAddQuestionFill.content);

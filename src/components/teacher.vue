@@ -1,6 +1,8 @@
 <template>
   <div>
-    <p><img src="../assets/images/logo.png" height="55"/><span style="float: right;margin-top: 20px"><el-tag effect="plain">当前用户&nbsp;:&nbsp;<span style="color: red">{{ currentUserName }}</span></el-tag>&nbsp;&nbsp;&nbsp;<el-tag effect="plain">当前身份&nbsp;:&nbsp;<span style="color: red">{{currentType }}</span></el-tag></span></p>
+    <p><img src="../assets/images/logo.png" height="55"/><span style="float: right;margin-top: 20px"><el-tag
+      effect="plain">当前用户&nbsp;:&nbsp;<span style="color: red">{{ currentUserName }}</span></el-tag>&nbsp;&nbsp;&nbsp;<el-tag
+      effect="plain">当前身份&nbsp;:&nbsp;<span style="color: red">{{ currentType }}</span></el-tag></span></p>
     <el-dialog
       title="提示"
       :visible.sync="dialogVisible"
@@ -28,10 +30,12 @@
                 @open="handleOpen"
                 @close="handleClose"
                 :collapse="isCollapse">
-                <el-menu-item index="1">
-                  <i class="el-icon-myScore"></i>
-                  <span slot="title"><a @click="currentCom='viewAllPaper'">查看学生成绩</a></span>
-                </el-menu-item>
+                <a @click="currentCom='viewAllPaper'">
+                  <el-menu-item index="1">
+                    <i class="el-icon-myScore"></i>
+                    <span slot="title">查看学生成绩</span>
+                  </el-menu-item>
+                </a>
                 <el-submenu index="2">
                   <template slot="title">
                     <i class="el-icon-myPaper"></i>
@@ -39,23 +43,43 @@
                   </template>
                   <el-submenu index="2-1">
                     <template slot="title"><i class="el-icon-myAdd"></i>添加试题</template>
-                    <el-menu-item index="2-1-1"><i class="el-icon-myOne"></i><a @click="currentCom='addQuestionSingle'">单选题</a></el-menu-item>
-                    <el-menu-item index="2-1-2"><i class="el-icon-myFill"></i><a @click="currentCom='addQuestionFill'">填空题</a></el-menu-item>
+                    <a @click="currentCom='addQuestionSingle'">
+                      <el-menu-item index="2-1-1">
+                        <i class="el-icon-myOne"></i>单选题
+                      </el-menu-item>
+                    </a>
+                    <a @click="currentCom='addQuestionFill'">
+                      <el-menu-item index="2-1-2">
+                        <i class="el-icon-myFill"></i>填空题
+                      </el-menu-item>
+                    </a>
                   </el-submenu>
                   <el-submenu index="2-2">
                     <template slot="title"><i class="el-icon-mySearch"></i>查看试题</template>
-                    <el-menu-item index="2-2-1"><i class="el-icon-myAllQuestion"></i><a @click="currentCom='allQuestionTeacher'">全部试题</a></el-menu-item>
-                    <el-menu-item index="2-2-2"><i class="el-icon-myQuestion"></i><a @click="currentCom='myQuestion'">我的试题</a></el-menu-item>
+                    <a @click="currentCom='allQuestionTeacher'">
+                      <el-menu-item index="2-2-1">
+                        <i class="el-icon-myAllQuestion"></i>全部试题
+                      </el-menu-item>
+                    </a>
+                    <a @click="currentCom='myQuestion'">
+                      <el-menu-item index="2-2-2">
+                        <i class="el-icon-myQuestion"></i>我的试题
+                      </el-menu-item>
+                    </a>
                   </el-submenu>
                 </el-submenu>
-                <el-menu-item index="3">
-                  <i class="el-icon-modifyPassword"></i>
-                  <span slot="title"><a @click="currentCom='toModifyPassword'">修改密码</a></span>
-                </el-menu-item>
-                <el-menu-item index="4">
-                  <i class="el-icon-switch-button"></i>
-                  <span slot="title"><a @click="dialogVisible = true">注销</a></span>
-                </el-menu-item>
+                <a @click="currentCom='toModifyPassword'">
+                  <el-menu-item index="3">
+                    <i class="el-icon-modifyPassword"></i>
+                    <span slot="title">修改密码</span>
+                  </el-menu-item>
+                </a>
+                <a @click="dialogVisible = true">
+                  <el-menu-item index="4">
+                    <i class="el-icon-switch-button"></i>
+                    <span slot="title">注销</span>
+                  </el-menu-item>
+                </a>
               </el-menu>
             </el-col>
           </el-row>
@@ -88,7 +112,7 @@ export default {
       currentType: sessionStorage.getItem("type"),
       dialogVisible: false,
       currentCom: '',
-      isCollapse:false
+      isCollapse: false
     }
   },
   components: {

@@ -1,6 +1,8 @@
 <template>
   <div>
-    <p><img src="../assets/images/logo.png" height="55"/><span style="float: right;margin-top: 20px"><el-tag effect="plain">当前用户&nbsp;:&nbsp;<span style="color: red">{{ currentUserName }}</span></el-tag>&nbsp;&nbsp;&nbsp;<el-tag effect="plain">当前身份&nbsp;:&nbsp;<span style="color: red">{{currentType }}</span></el-tag></span></p>
+    <p><img src="../assets/images/logo.png" height="55"/><span style="float: right;margin-top: 20px"><el-tag
+      effect="plain">当前用户&nbsp;:&nbsp;<span style="color: red">{{ currentUserName }}</span></el-tag>&nbsp;&nbsp;&nbsp;<el-tag
+      effect="plain">当前身份&nbsp;:&nbsp;<span style="color: red">{{ currentType }}</span></el-tag></span></p>
     <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
       <el-button @click="isCollapse=false" size="mini" v-show="isCollapse">展开菜单栏</el-button>
       <el-button @click="isCollapse=true" size="mini" v-show="!isCollapse">收起菜单栏</el-button>
@@ -28,22 +30,30 @@
                 @open="handleOpen"
                 @close="handleClose"
                 :collapse="isCollapse">
-                <el-menu-item index="1">
-                  <i class="el-icon-myScore"></i>
-                  <span slot="title"><a @click="currentCom='viewMyPaper'">查看成绩</a></span>
-                </el-menu-item>
-                <el-menu-item index="2">
-                  <i class="el-icon-myTest"></i>
-                  <span slot="title"><a @click="currentCom='toSelectPaperPage'">开始考试</a></span>
-                </el-menu-item>
-                <el-menu-item index="3">
-                  <i class="el-icon-modifyPassword"></i>
-                  <span slot="title"><a @click="currentCom='toModifyPassword'">修改密码</a></span>
-                </el-menu-item>
-                <el-menu-item index="4">
-                  <i class="el-icon-switch-button"></i>
-                  <span slot="title"><a @click="dialogVisible = true">注销</a></span>
-                </el-menu-item>
+                <a @click="currentCom='viewMyPaper'">
+                  <el-menu-item index="1">
+                    <i class="el-icon-myScore"></i>
+                    <span slot="title">查看成绩</span>
+                  </el-menu-item>
+                </a>
+                <a @click="currentCom='toSelectPaperPage'">
+                  <el-menu-item index="2">
+                    <i class="el-icon-myTest"></i>
+                    <span slot="title">开始考试</span>
+                  </el-menu-item>
+                </a>
+                <a @click="currentCom='toModifyPassword'">
+                  <el-menu-item index="3">
+                    <i class="el-icon-modifyPassword"></i>
+                    <span slot="title">修改密码</span>
+                  </el-menu-item>
+                </a>
+                <a @click="dialogVisible = true">
+                  <el-menu-item index="4">
+                    <i class="el-icon-switch-button"></i>
+                    <span slot="title">注销</span>
+                  </el-menu-item>
+                </a>
               </el-menu>
             </el-col>
           </el-row>

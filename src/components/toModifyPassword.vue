@@ -54,10 +54,10 @@ export default {
       },
       rules: {
         password: [
-          {validator: validatePass, trigger: 'blur'}
+          {validator: validatePass, required: true, trigger: 'blur'}
         ],
         password2: [
-          {validator: validatePass2, trigger: 'blur'}
+          {validator: validatePass2, required: true, trigger: 'blur'}
         ]
       }
     }
@@ -65,6 +65,14 @@ export default {
   methods: {
     //修改密码
     modifyPassword: function () {
+      if (this.form.password === null || this.form.password === '') {
+        ElementUI.Message.error("请输入密码!");
+        return null;
+      }
+      if (this.form.password2 === null || this.form.password2 === '') {
+        ElementUI.Message.error("请输入确认密码!");
+        return null;
+      }
       if (this.form.password !== this.form.password2) {
         ElementUI.Message.error("新密码和确认密码不一致，请重新输入！！");
       } else {

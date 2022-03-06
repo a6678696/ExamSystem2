@@ -93,6 +93,30 @@ export default {
   methods: {
     //添加单选题
     addQuestionSingle: function () {
+      if (this.fromAddQuestion.content === null || this.fromAddQuestion.content === '') {
+        ElementUI.Message.error("请输入问题描述!");
+        return null;
+      }
+      if (this.fromAddQuestion.courseId === null || this.fromAddQuestion.courseId === '') {
+        ElementUI.Message.error("请选择科目!");
+        return null;
+      }
+      if (this.fromAddQuestion.answer1 === null || this.fromAddQuestion.answer1 === '') {
+        ElementUI.Message.error("请输入第一个答案!");
+        return null;
+      }
+      if (this.fromAddQuestion.answer2 === null || this.fromAddQuestion.answer2 === '') {
+        ElementUI.Message.error("请输入第二个答案!");
+        return null;
+      }
+      if (this.fromAddQuestion.answer3 === null || this.fromAddQuestion.answer3 === '') {
+        ElementUI.Message.error("请输入第三个答案!");
+        return null;
+      }
+      if (this.fromAddQuestion.answer4 === null || this.fromAddQuestion.answer4 === '') {
+        ElementUI.Message.error("请输入第四个答案!");
+        return null;
+      }
       let _this = this;
       let param = new URLSearchParams();
       param.append("content", this.fromAddQuestion.content);

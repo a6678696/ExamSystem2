@@ -9,7 +9,7 @@ import manager from "../components/manager";
 Vue.use(Router)
 
 const router = new Router({
-  mode: 'history',
+  mode: 'hash',
   routes: [
     {
       path: "/",
