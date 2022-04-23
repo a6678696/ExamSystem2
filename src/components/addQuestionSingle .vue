@@ -41,6 +41,7 @@
 <script>
 import axios from "axios";
 import ElementUI from "element-ui";
+import {getServerUrl} from "../config/url";
 
 export default {
   name: "addQuestionSingle",
@@ -84,7 +85,7 @@ export default {
   mounted() {
     //获取全部科目
     axios
-      .get('http://localhost/course/getAllCourse')
+      .get(getServerUrl() + 'course/getAllCourse')
       .then(response => (this.fromAddQuestion.allCourse = response.data.rows))
       .catch(function (error) {
         console.log(error);
@@ -126,7 +127,7 @@ export default {
       param.append("trueAnswer", this.fromAddQuestion.trueAnswer);
       param.append("userId", this.fromAddQuestion.userId);
       axios
-        .post('http://localhost/question/addQuestionSingle', param)
+        .post(getServerUrl() +'question/addQuestionSingle', param)
         .then(function (response) {
           if (response.data.success) {
             ElementUI.Message.success("添加单选题成功！！");

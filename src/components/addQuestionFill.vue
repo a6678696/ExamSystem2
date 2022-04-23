@@ -1,7 +1,8 @@
 <template>
   <div>
     <div style="width: 80%;margin-left: -10%">
-      <el-form ref="form" :model="fromAddQuestionFill" :rules="rules" rel="fromAddQuestionFill" label-width="80px" class="demo-ruleForm">
+      <el-form ref="form" :model="fromAddQuestionFill" :rules="rules" rel="fromAddQuestionFill" label-width="80px"
+               class="demo-ruleForm">
         <el-form-item label="问题描述" prop="content">
           <el-input v-model="fromAddQuestionFill.content" type="textarea"></el-input>
         </el-form-item>
@@ -25,6 +26,7 @@
 <script>
 import ElementUI from "element-ui";
 import axios from "axios";
+import {getServerUrl} from "../config/url";
 
 export default {
   name: "addQuestionFill",
@@ -35,10 +37,10 @@ export default {
         courseId: '',
         answer: '',
         allCourse: null,
-        type:'填空题',
+        type: '填空题',
         userId: sessionStorage.getItem("userId")
       },
-      rules:{
+      rules: {
         content: [
           {required: true, message: '请输入问题描述', trigger: 'blur'},
         ],
@@ -74,7 +76,7 @@ export default {
       param.append("answer", this.fromAddQuestionFill.answer);
       param.append("userId", this.fromAddQuestionFill.userId);
       axios
-        .post('http://localhost/question/addQuestionFill', param)
+        .post(getServerUrl() + 'question/addQuestionFill', param)
         .then(function (response) {
           if (response.data.success) {
             ElementUI.Message.success("添加填空题成功！！");
@@ -92,7 +94,7 @@ export default {
   },
   mounted() {
     axios
-      .get('http://localhost/course/getAllCourse')
+      .get(getServerUrl() + 'course/getAllCourse')
       .then(response => (this.fromAddQuestionFill.allCourse = response.data.rows))
       .catch(function (error) {
         console.log(error);

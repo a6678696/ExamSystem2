@@ -23,6 +23,7 @@
 <script>
 import ElementUI from "element-ui";
 import axios from "axios";
+import {getServerUrl} from "../config/url";
 
 export default {
   name: "toModifyPassword",
@@ -81,7 +82,7 @@ export default {
         param.append("userName", this.form.userName);
         param.append("password", this.form.password);
         axios
-          .post('http://localhost/user/modifyPassword', param)
+          .post(getServerUrl() + 'user/modifyPassword', param)
           .then(function (response) {
             let status = response.data.status;
             if (status === 1) {

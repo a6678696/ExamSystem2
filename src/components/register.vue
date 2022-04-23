@@ -25,6 +25,7 @@
 <script>
 import ElementUI from 'element-ui';
 import axios from "axios";
+import {getServerUrl} from "../config/url";
 
 export default {
   name: "register",
@@ -62,7 +63,7 @@ export default {
       let param = new URLSearchParams();
       param.append("userName", userName);
       axios
-        .post('http://localhost/user/findByUserName', param)
+        .post(getServerUrl() +'user/findByUserName', param)
         .then(function (response) {
           if (response.data.success) {
             let __this = _this;
@@ -71,7 +72,7 @@ export default {
             param2.append("password", __this.form.password);
             param2.append("type", "学生");
             axios
-              .post('http://localhost/user/add', param2)
+              .post(getServerUrl() +'user/add', param2)
               .then(function (response) {
                 if (response.data.success) {
                   ElementUI.Message.success("注册成功");

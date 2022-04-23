@@ -86,6 +86,7 @@
 
 <script>
 import axios from "axios";
+import {getServerUrl} from "../config/url";
 
 export default {
   name: "viewMyPaper",
@@ -115,7 +116,7 @@ export default {
       let param = new URLSearchParams();
       param.append("id", id);
       axios
-        .post('http://localhost/paper/findById', param)
+        .post(getServerUrl() +'paper/findById', param)
         .then(function (response) {
           _this.paperDetails.courseName = response.data.paper.courseName;
           _this.paperDetails.createDate = response.data.paper.createDate;
@@ -132,7 +133,7 @@ export default {
     //刷新页面数据
     reloadData: function () {
       axios
-        .get('http://localhost/paper/getListFindByUserId?userId=' + sessionStorage.getItem("userId") + '&page=' + this.pagination.page + '&size=' + this.pagination.size)
+        .get(getServerUrl() +'paper/getListFindByUserId?userId=' + sessionStorage.getItem("userId") + '&page=' + this.pagination.page + '&size=' + this.pagination.size)
         .then(response => (this.myPaper = response.data.rows))
         .catch(function (error) {
           console.log(error);
@@ -141,7 +142,7 @@ export default {
   },
   mounted() {
     axios
-      .get('http://localhost/paper/getListFindByUserId?userId=' + sessionStorage.getItem("userId") + '&page=' + this.pagination.page + '&size=' + this.pagination.size)
+      .get(getServerUrl() +'paper/getListFindByUserId?userId=' + sessionStorage.getItem("userId") + '&page=' + this.pagination.page + '&size=' + this.pagination.size)
       .then(response => (this.myPaper = response.data.rows, this.pagination.count = response.data.total))
       .catch(function (error) {
         console.log(error);

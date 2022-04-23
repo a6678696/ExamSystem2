@@ -29,6 +29,7 @@
 <script>
 import ElementUI from "element-ui";
 import axios from "axios";
+import {getServerUrl} from "../config/url";
 
 export default {
   name: "login",
@@ -66,7 +67,7 @@ export default {
       param.append("password", this.form.password);
       param.append("type", this.form.type);
       axios
-        .post('http://localhost/user/login', param)
+        .post(getServerUrl() +'user/login', param)
         .then(function (response) {
           let status = response.data.status;
           let userId = response.data.userId;

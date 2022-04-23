@@ -120,6 +120,7 @@
 <script>
 import axios from "axios";
 import ElementUI from "element-ui";
+import {getServerUrl} from "../config/url";
 
 export default {
   name: "userManage",
@@ -163,7 +164,7 @@ export default {
     },
     reloadData: function () {
       axios
-        .get('http://localhost/user/list?page=' + this.pagination.page + '&size=' + this.pagination.size)
+        .get(getServerUrl() + 'user/list?page=' + this.pagination.page + '&size=' + this.pagination.size)
         .then(response => (this.userList = response.data.userList, this.pagination.count = response.data.total))
         .catch(function (error) {
           console.log(error);
@@ -181,7 +182,7 @@ export default {
       param.append("page", this.pagination.page);
       param.append("size", this.pagination.size);
       axios
-        .post('http://localhost/user/list', param)
+        .post(getServerUrl() + 'user/list', param)
         .then(function (response) {
           _this.userList = response.data.userList;
           _this.pagination.count = response.data.total;
@@ -194,7 +195,7 @@ export default {
     openDetailsDialog: function (id) {
       this.dialogVisibleDetails = true;
       axios
-        .get('http://localhost/user/findById?id=' + id)
+        .get(getServerUrl() + 'user/findById?id=' + id)
         .then(response => (this.details.userName = response.data.user.userName, this.details.type = response.data.user.type, this.details.password = response.data.user.password))
         .catch(function (error) {
           console.log(error);
@@ -229,7 +230,7 @@ export default {
       let param = new URLSearchParams();
       param.append("userName", userName);
       axios
-        .post('http://localhost/user/findByUserName', param)
+        .post(getServerUrl() + 'user/findByUserName', param)
         .then(function (response) {
           if (response.data.success) {
             let __this = _this;
@@ -238,7 +239,7 @@ export default {
             param2.append("password", __this.formAdd.password);
             param2.append("type", __this.formAdd.type);
             axios
-              .post('http://localhost/user/add', param2)
+              .post(getServerUrl() + 'user/add', param2)
               .then(function (response) {
                 if (response.data.success) {
                   ElementUI.Message.success("添加成功");
@@ -268,7 +269,7 @@ export default {
     openModifyDialog: function (id) {
       this.dialogVisibleModify = true;
       axios
-        .get('http://localhost/user/findById?id=' + id)
+        .get(getServerUrl() + 'user/findById?id=' + id)
         .then(response => (this.formModify.userName = response.data.user.userName, this.formModify.password = response.data.user.password, this.formModify.password2 = response.data.user.password))
         .catch(function (error) {
           console.log(error);
@@ -295,7 +296,7 @@ export default {
       param.append("userName", userName);
       param.append("password", password);
       axios
-        .post('http://localhost/user/modifyPassword', param)
+        .post(getServerUrl() + 'user/modifyPassword', param)
         .then(function (response) {
           let status = response.data.status;
           if (status === 1) {
@@ -312,7 +313,7 @@ export default {
   },
   mounted() {
     axios
-      .get('http://localhost/user/list?page=' + this.pagination.page + '&size=' + this.pagination.size)
+      .get(getServerUrl() + 'user/list?page=' + this.pagination.page + '&size=' + this.pagination.size)
       .then(response => (this.userList = response.data.userList, this.pagination.count = response.data.total))
       .catch(function (error) {
         console.log(error);

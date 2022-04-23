@@ -95,7 +95,7 @@
 <script>
 import axios from "axios";
 import ElementUI from "element-ui";
-import jquery from "jquery";
+import {getServerUrl} from "../config/url";
 
 export default {
   name: "toSelectPaperPage",
@@ -146,7 +146,7 @@ export default {
       param.append("courseId", this.form.courseId);
       param.append("courseName", this.form.courseName);
       axios
-        .post('http://localhost/paper/add', param)
+        .post(getServerUrl() + 'paper/add', param)
         .then(function (response) {
           _this.questionSingleList = response.data.resultSingleQuestionList;
           _this.questionFillList = response.data.resultFillQuestionList;
@@ -160,7 +160,7 @@ export default {
     getCode: function () {
       let _this = this;
       axios
-        .get('http://localhost/course/findById?id=' + this.form.courseId)
+        .get(getServerUrl() + 'course/findById?id=' + this.form.courseId)
         .then(function (response) {
           _this.testMinutes = response.data.course.minutes;
           ElementUI.Message.warning("本场考试时间为: " + _this.testMinutes + " 分钟");
@@ -206,7 +206,7 @@ export default {
           param.append("questionSingleStr", answerSingleStr);
           param.append("questionFillStr", answerFillStr);
           axios
-            .post('http://localhost/paper/submitPaper', param)
+            .post(getServerUrl() + 'paper/submitPaper', param)
             .then(function (response) {
               if (response.data.success) {
               }
@@ -260,7 +260,7 @@ export default {
         param.append("questionSingleStr", answerSingleStr);
         param.append("questionFillStr", answerFillStr);
         axios
-          .post('http://localhost/paper/submitPaper', param)
+          .post(getServerUrl() + 'paper/submitPaper', param)
           .then(function (response) {
             if (response.data.success) {
               ElementUI.Message.success("交卷成功！！");
@@ -299,7 +299,7 @@ export default {
       param.append("questionSingleStr", answerSingleStr);
       param.append("questionFillStr", answerFillStr);
       axios
-        .post('http://localhost/paper/submitPaper', param)
+        .post(getServerUrl() + 'paper/submitPaper', param)
         .then(function (response) {
           if (response.data.success) {
             ElementUI.Message.success("强制交卷成功！！");
@@ -322,7 +322,7 @@ export default {
   },
   mounted() {
     axios
-      .get('http://localhost/course/getCourseCanTest')
+      .get(getServerUrl() + 'course/getCourseCanTest')
       .then(response => (this.form.allCourse = response.data.rows))
       .catch(function (error) {
         console.log(error);

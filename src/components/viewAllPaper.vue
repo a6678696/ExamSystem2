@@ -101,6 +101,7 @@
 
 <script>
 import axios from "axios";
+import {getServerUrl} from "../config/url";
 
 export default {
   name: "viewAllPaper",
@@ -133,7 +134,7 @@ export default {
       let param = new URLSearchParams();
       param.append("id", id);
       axios
-        .post('http://localhost/paper/findById', param)
+        .post(getServerUrl() +'paper/findById', param)
         .then(function (response) {
           _this.paperDetails.courseName = response.data.paper.courseName;
           _this.paperDetails.createDate = response.data.paper.createDate;
@@ -150,7 +151,7 @@ export default {
     //刷新页面数据
     reloadData: function () {
       axios
-        .get('http://localhost/paper/getListFindByUserId?page=' + this.pagination.page + '&size=' + this.pagination.size)
+        .get(getServerUrl() +'paper/getListFindByUserId?page=' + this.pagination.page + '&size=' + this.pagination.size)
         .then(response => (this.myPaper = response.data.rows, this.pagination.count = response.data.total))
         .catch(function (error) {
           console.log(error);
@@ -162,7 +163,7 @@ export default {
     searchPaper: function () {
       let _this=this;
       axios
-        .get('http://localhost/paper/getListFindByUserName?page=' + this.pagination.page + '&size=' + this.pagination.size+'&userName='+this.formSearch.userName)
+        .get(getServerUrl() +'paper/getListFindByUserName?page=' + this.pagination.page + '&size=' + this.pagination.size+'&userName='+this.formSearch.userName)
         .then(response => (this.myPaper = response.data.rows, this.pagination.count = response.data.total,_this.searchPaper()))
         .catch(function (error) {
           console.log(error);
@@ -171,7 +172,7 @@ export default {
   },
   mounted() {
     axios
-      .get('http://localhost/paper/getListFindByUserId?page=' + this.pagination.page + '&size=' + this.pagination.size)
+      .get(getServerUrl() +'paper/getListFindByUserId?page=' + this.pagination.page + '&size=' + this.pagination.size)
       .then(response => (this.myPaper = response.data.rows, this.pagination.count = response.data.total))
       .catch(function (error) {
         console.log(error);

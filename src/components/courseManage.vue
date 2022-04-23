@@ -135,6 +135,7 @@
 <script>
 import axios from "axios";
 import ElementUI from "element-ui";
+import {getServerUrl} from "../config/url";
 
 export default {
   name: "courseManage",
@@ -183,7 +184,7 @@ export default {
       param.append("page", this.pagination.page);
       param.append("size", this.pagination.size);
       axios
-        .post('http://localhost/course/list', param)
+        .post(getServerUrl() + 'course/list', param)
         .then(function (result) {
           _this.courseList = result.data.courseList;
           _this.pagination.count = result.data.total;
@@ -197,7 +198,7 @@ export default {
       param.append("page", this.pagination.page);
       param.append("size", this.pagination.size);
       axios
-        .post('http://localhost/course/list', param)
+        .post(getServerUrl() + 'course/list', param)
         .then(function (result) {
           _this.courseList = result.data.courseList;
           _this.pagination.count = result.data.total;
@@ -223,7 +224,7 @@ export default {
       param.append("name", this.formAdd.name);
       param.append("minutes", this.formAdd.minutes);
       axios
-        .post('http://localhost/course/add', param)
+        .post(getServerUrl() + 'course/add', param)
         .then(function (result) {
           if (result.data.success) {
             _this.reloadData();
@@ -245,7 +246,7 @@ export default {
       let param = new URLSearchParams();
       param.append("id", this.deleteId);
       axios
-        .post('http://localhost/course/delete', param)
+        .post(getServerUrl() + 'course/delete', param)
         .then(function (result) {
           if (result.data.success) {
             _this.reloadData();
@@ -264,7 +265,7 @@ export default {
       this.dialogVisibleDetails = true;
       let _this = this;
       axios
-        .get('http://localhost/course/findById?id=' + id)
+        .get(getServerUrl() + 'course/findById?id=' + id)
         .then(function (response) {
           _this.formDetails.name = response.data.course.name;
           _this.formDetails.minutes = response.data.course.minutes;
@@ -280,7 +281,7 @@ export default {
       this.formModify.id = id;
       let _this = this;
       axios
-        .post('http://localhost/course/findById?id=' + id)
+        .post(getServerUrl() + 'course/findById?id=' + id)
         .then(function (response) {
           _this.formModify.name = response.data.course.name;
           _this.formModify.minutes = response.data.course.minutes;
@@ -299,13 +300,13 @@ export default {
         ElementUI.Message.error("请输入考试时间!");
         return null;
       }
-      let _this=this;
+      let _this = this;
       let param = new URLSearchParams();
       param.append("id", this.formModify.id);
       param.append("name", this.formModify.name);
       param.append("minutes", this.formModify.minutes);
       axios
-        .post('http://localhost/course/update', param)
+        .post(getServerUrl() + 'course/update', param)
         .then(function (response) {
           if (response.data.success) {
             ElementUI.Message.success("修改科目成功!!");
@@ -324,7 +325,7 @@ export default {
     param.append("page", this.pagination.page);
     param.append("size", this.pagination.size);
     axios
-      .post('http://localhost/course/list', param)
+      .post(getServerUrl() + 'course/list', param)
       .then(function (result) {
         _this.courseList = result.data.courseList;
         _this.pagination.count = result.data.total;

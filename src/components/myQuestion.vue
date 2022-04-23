@@ -124,6 +124,7 @@
 <script>
 import axios from "axios";
 import ElementUI from "element-ui";
+import {getServerUrl} from "../config/url";
 
 export default {
   name: "myQuestion",
@@ -167,7 +168,7 @@ export default {
       let param = new URLSearchParams();
       param.append("id", id);
       axios
-        .post('http://localhost/question/findById', param)
+        .post(getServerUrl() + 'question/findById', param)
         .then(function (response) {
           _this.details.questionDetailsContent = response.data.question.content;
           _this.details.questionDetailsCourseName = response.data.question.courseName;
@@ -182,7 +183,7 @@ export default {
       let param2 = new URLSearchParams();
       param2.append("questionId", id);
       axios
-        .post('http://localhost/answer/getAnswerByQuestionId', param2)
+        .post(getServerUrl() + 'answer/getAnswerByQuestionId', param2)
         .then(function (response) {
           _this.details.questionDetailsAnswer = response.data.rows;
         })
@@ -204,7 +205,7 @@ export default {
       let param = new URLSearchParams();
       param.append("id", id);
       axios
-        .post('http://localhost/question/findById', param)
+        .post(getServerUrl() + 'question/findById', param)
         .then(function (response) {
           _this.formModify.content = response.data.question.content;
           _this.formModify.courseId = response.data.question.courseId;
@@ -216,7 +217,7 @@ export default {
       let param2 = new URLSearchParams();
       param2.append("questionId", id);
       axios
-        .post('http://localhost/answer/getAnswerByQuestionId', param2)
+        .post(getServerUrl() + 'answer/getAnswerByQuestionId', param2)
         .then(function (response) {
           _this.formModify.answers = response.data.rows;
           for (let i = 0; i < _this.formModify.answers.length; i++) {
@@ -253,7 +254,7 @@ export default {
       param.append("answerString", answerString);
       param.append("trueAnswerId", trueAnswerId);
       axios
-        .post('http://localhost/question/update', param)
+        .post(getServerUrl() + 'question/update', param)
         .then(function (response) {
           if (response.data.success) {
             _this.dialogFormVisible2 = false;
@@ -272,7 +273,7 @@ export default {
       let param = new URLSearchParams();
       param.append("id", id);
       axios
-        .post('http://localhost/question/deleteById', param)
+        .post(getServerUrl() + 'question/deleteById', param)
         .then(function (response) {
           if (response.data.success) {
             _this.dialogVisible2 = false;
@@ -294,7 +295,7 @@ export default {
       param.append("page", this.pagination.page);
       param.append("size", this.pagination.size);
       axios
-        .post('http://localhost/question/searchQuestion', param)
+        .post(getServerUrl() + 'question/searchQuestion', param)
         .then(function (response) {
           _this.myQuestion = response.data.rows
           _this.pagination.count = response.data.total;
@@ -317,13 +318,13 @@ export default {
     //刷新数据
     reloadData: function () {
       axios
-        .get('http://localhost/question/getMyQuestion?userId=' + sessionStorage.getItem("userId") + '&page=' + this.pagination.page + '&size=' + this.pagination.size)
+        .get(getServerUrl() + 'question/getMyQuestion?userId=' + sessionStorage.getItem("userId") + '&page=' + this.pagination.page + '&size=' + this.pagination.size)
         .then(response => (this.myQuestion = response.data.rows, this.pagination.count = response.data.total))
         .catch(function (error) {
           console.log(error);
         });
       axios
-        .get('http://localhost/course/getAllCourse')
+        .get(getServerUrl() + 'course/getAllCourse')
         .then(response => (this.formSearch.allCourse = response.data.rows))
         .catch(function (error) {
           console.log(error);
@@ -332,13 +333,13 @@ export default {
   },
   mounted() {
     axios
-      .get('http://localhost/question/getMyQuestion?userId=' + sessionStorage.getItem("userId") + '&page=' + this.pagination.page + '&size=' + this.pagination.size)
+      .get(getServerUrl() + 'question/getMyQuestion?userId=' + sessionStorage.getItem("userId") + '&page=' + this.pagination.page + '&size=' + this.pagination.size)
       .then(response => (this.myQuestion = response.data.rows, this.pagination.count = response.data.total))
       .catch(function (error) {
         console.log(error);
       });
     axios
-      .get('http://localhost/course/getAllCourse')
+      .get(getServerUrl() + 'course/getAllCourse')
       .then(response => (this.formSearch.allCourse = response.data.rows))
       .catch(function (error) {
         console.log(error);
