@@ -1,24 +1,33 @@
 <template>
-  <div style="width: 40%;margin-left: 30%;margin-top: 6%">
-    <p style="text-align: center"><img src="../assets/images/logo.png" height="55"/></p>
-    <h3 style="text-align: center">学生注册</h3>
-    <el-form ref="form" :model="form" label-width="80px">
-      <el-form-item label="用户名">
-        <el-input v-model="form.userName"></el-input>
-      </el-form-item>
-      <el-form-item label="密码">
-        <el-input v-model="form.password" type="password"></el-input>
-      </el-form-item>
-      <el-form-item label="确认密码">
-        <el-input v-model="form.password2" type="password"></el-input>
-      </el-form-item>
-      <el-form-item style="text-align: center">
-        <el-button type="primary" @click="onSubmit()">注册</el-button>
-        <router-link type="primary" to="/login">
-          <el-button type="primary">登录</el-button>
-        </router-link>
-      </el-form-item>
-    </el-form>
+  <div class="bjimg">
+    <div style="width: 40%;margin-left: 30%;margin-top: 6%">
+      <p style="text-align: center"><img src="../assets/images/logo.png" height="55"/></p>
+      <el-card class="box-card" shadow="always">
+        <div slot="header" class="clearfix">
+          <strong>学生注册</strong>
+          <router-link type="primary" to="/login">
+            <el-button style="float: right; padding: 3px 0" type="text">去登录<i class="el-icon-caret-right
+"></i></el-button>
+          </router-link>
+        </div>
+        <div class="text item">
+          <el-form ref="form" :model="form" :rules="rules" label-width="80px" class="demo-ruleForm">
+            <el-form-item label="用户名" prop="userName">
+              <el-input v-model="form.userName"></el-input>
+            </el-form-item>
+            <el-form-item label="密码" prop="password">
+              <el-input v-model="form.password" type="password"></el-input>
+            </el-form-item>
+            <el-form-item label="确认密码" prop="password2">
+              <el-input v-model="form.password2" type="password"></el-input>
+            </el-form-item>
+            <div style="text-align: center">
+              <el-button type="primary" @click="onSubmit()" size="medium">注册</el-button>
+            </div>
+          </el-form>
+        </div>
+      </el-card>
+    </div>
   </div>
 </template>
 
@@ -35,6 +44,17 @@ export default {
         userName: '',
         password: '',
         password2: ''
+      },
+      rules: {
+        userName: [
+          {required: true, message: '请输入用户名', trigger: 'blur'},
+        ],
+        password: [
+          {required: true, message: '请输入密码', trigger: 'blur'}
+        ],
+        password2: [
+          {required: true, message: '请输入确认密码', trigger: 'blur'}
+        ]
       }
     }
   },
@@ -97,5 +117,21 @@ export default {
 </script>
 
 <style scoped>
-
+.bjimg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  min-width: 1000px;
+  z-index: -10;
+  zoom: 1;
+  background-color: #fff;
+  background-image: url(../assets/images/bg.jpeg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  background-position: center 0;
+}
 </style>

@@ -1,28 +1,37 @@
 <template>
-  <div style="width: 40%;margin-left: 30%;margin-top: 6%">
-    <p style="text-align: center"><img src="../assets/images/logo.png" height="55"/></p>
-    <h3 style="text-align: center"><span style="color: #a768db">{{ form.type }}</span>登录</h3>
-    <el-form ref="form" :model="form" :rules="rules" label-width="80px" class="demo-ruleForm">
-      <el-form-item label="用户名" prop="userName">
-        <el-input v-model="form.userName"></el-input>
-      </el-form-item>
-      <el-form-item label="密码" prop="password">
-        <el-input v-model="form.password" type="password"></el-input>
-      </el-form-item>
-      <el-form-item label="选择身份">
-        <el-radio-group v-model="form.type">
-          <el-radio label="学生"></el-radio>
-          <el-radio label="教师"></el-radio>
-          <el-radio label="管理员"></el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item style="text-align: center">
-        <el-button type="primary" @click="onSubmit()">登录</el-button>
-        <router-link type="primary" to="/register">
-          <el-button type="primary">注册</el-button>
-        </router-link>
-      </el-form-item>
-    </el-form>
+  <div class="bjimg">
+    <div  style="width: 40%;margin-left: 30%;margin-top: 6%">
+      <p style="text-align: center"><img src="../assets/images/logo.png" height="55"/></p>
+      <el-card class="box-card" shadow="always">
+        <div slot="header" class="clearfix">
+          <strong><strong style="color: #a768db">{{ form.type }}</strong>登录</strong>
+          <router-link type="primary" to="/register">
+            <el-button style="float: right; padding: 3px 0" type="text">去注册<i class="el-icon-caret-right
+"></i></el-button>
+          </router-link>
+        </div>
+        <div class="text item">
+          <el-form ref="form" :model="form" :rules="rules" label-width="80px" class="demo-ruleForm">
+            <el-form-item label="用户名" prop="userName">
+              <el-input v-model="form.userName"></el-input>
+            </el-form-item>
+            <el-form-item label="密码" prop="password">
+              <el-input v-model="form.password" type="password"></el-input>
+            </el-form-item>
+            <el-form-item label="选择身份">
+              <el-radio-group v-model="form.type">
+                <el-radio label="学生"></el-radio>
+                <el-radio label="教师"></el-radio>
+                <el-radio label="管理员"></el-radio>
+              </el-radio-group>
+            </el-form-item>
+            <div style="text-align: center">
+              <el-button type="primary" @click="onSubmit()" size="medium">登录</el-button>
+            </div>
+          </el-form>
+        </div>
+      </el-card>
+    </div>
   </div>
 </template>
 
@@ -85,7 +94,7 @@ export default {
               _this.$router.push('/manager');
             }
           } else {
-            ElementUI.Message.error("用户名、密码或身份错误,请重新输入!");
+            ElementUI.Message.error("用户名、密码或身份错误，请重新输入！");
           }
         })
         .catch(function (error) {
@@ -97,5 +106,21 @@ export default {
 </script>
 
 <style scoped>
-
+.bjimg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  min-width: 1000px;
+  z-index: -10;
+  zoom: 1;
+  background-color: #fff;
+  background-image: url(../assets/images/bg.jpeg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  background-position: center 0;
+}
 </style>

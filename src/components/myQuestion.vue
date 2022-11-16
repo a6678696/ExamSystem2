@@ -93,18 +93,24 @@
       <el-table-column
         label="操作" align="center">
         <template slot-scope="scope">
-          <el-button
-            size="mini" type="primary"
-            @click="handleDetails(scope.row.id)">查看
-          </el-button>
-          <el-button
-            size="mini" type="warning"
-            @click="openModifyDialog(scope.row.id)">修改
-          </el-button>
-          <el-button
-            size="mini" type="danger"
-            @click="openDialog(scope.row.id)">删除
-          </el-button>
+          <el-tooltip class="item" effect="dark" content="查看详情" placement="top">
+            <el-button
+              size="mini" type="primary"
+              @click="handleDetails(scope.row.id)"><i class="el-icon-search"></i>
+            </el-button>
+          </el-tooltip>
+          <el-tooltip class="item" effect="dark" content="修改" placement="top">
+            <el-button
+              size="mini" type="warning"
+              @click="openModifyDialog(scope.row.id)"><i class="el-icon-edit"></i>
+            </el-button>
+          </el-tooltip>
+          <el-tooltip class="item" effect="dark" content="删除" placement="top">
+            <el-button
+              size="mini" type="danger"
+              @click="openDialog(scope.row.id)"><i class="el-icon-delete"></i>
+            </el-button>
+          </el-tooltip>
         </template>
       </el-table-column>
     </el-table>
