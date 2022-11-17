@@ -46,7 +46,7 @@
     <el-button type="primary" @click="dialogVisible = false">关闭</el-button>
   </span>
     </el-dialog>
-    <el-table
+    <el-table border="true"
       :data="myPaper.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%">
       <el-table-column
@@ -64,10 +64,12 @@
       <el-table-column
         label="操作" align="center">
         <template slot-scope="scope">
-          <el-button
-            size="mini" type="primary"
-            @click="handleDetails(scope.row.id)">查看
-          </el-button>
+          <el-tooltip class="item" effect="dark" content="查看详情" placement="top">
+            <el-button circle="true"
+              size="medium" type="primary"
+              @click="handleDetails(scope.row.id)"><i class="el-icon-search"></i>
+            </el-button>
+          </el-tooltip>
         </template>
       </el-table-column>
     </el-table>

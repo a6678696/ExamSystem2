@@ -77,9 +77,13 @@
         <el-input v-model="formSearch.name" style="width: 255px" placeholder="科目名称"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="searchCourse()"><i class="el-icon-search"></i>查询</el-button>
-        <el-button type="info" @click="resetValue()"><i class="el-icon-refresh-left"></i>重置</el-button>
-        <el-button type="primary" @click="dialogVisibleAdd=true" plain><i class="el-icon-plus"></i>添加科目</el-button>
+        <el-tooltip class="item" effect="dark" content="搜索" placement="top">
+          <el-button type="primary" @click="searchCourse()"><i class="el-icon-search"></i></el-button>
+        </el-tooltip>
+        <el-tooltip class="item" effect="dark" content="重置条件" placement="top">
+          <el-button type="info" @click="resetValue()"><i class="el-icon-refresh-left"></i></el-button>
+        </el-tooltip>
+        <el-button type="primary" @click="dialogVisibleAdd=true" plain><i class="el-icon-plus"></i> 添加科目</el-button>
       </el-form-item>
     </el-form>
     <el-table
@@ -105,21 +109,21 @@
         label="操作" align="center">
         <template slot-scope="scope">
           <el-tooltip class="item" effect="dark" content="查看详情" placement="top">
-            <el-button
-              size="mini" type="primary"
-              @click="openDetailsDialog(scope.row.id)"><i class="el-icon-search"></i>
+            <el-button circle="true"
+                       size="medium" type="primary"
+                       @click="openDetailsDialog(scope.row.id)"><i class="el-icon-search"></i>
             </el-button>
           </el-tooltip>
           <el-tooltip class="item" effect="dark" content="修改" placement="top">
-            <el-button
-              size="mini" type="warning"
-              @click="openModifyDialog(scope.row.id)"><i class="el-icon-edit"></i>
+            <el-button circle="true"
+                       size="medium" type="warning"
+                       @click="openModifyDialog(scope.row.id)"><i class="el-icon-edit"></i>
             </el-button>
           </el-tooltip>
           <el-tooltip class="item" effect="dark" content="删除" placement="top">
-            <el-button
-              size="mini" type="danger"
-              @click="openDeleteDialog(scope.row.id)"><i class="el-icon-delete"></i>
+            <el-button circle="true"
+                       size="medium" type="danger"
+                       @click="openDeleteDialog(scope.row.id)"><i class="el-icon-delete"></i>
             </el-button>
           </el-tooltip>
         </template>

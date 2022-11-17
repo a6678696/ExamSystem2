@@ -15,10 +15,10 @@
     <el-button type="danger" @click="dialogVisible = false">否</el-button>
   </span>
     </el-dialog>
-    <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
+<!--    <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
       <el-button @click="isCollapse=false" size="mini" v-show="isCollapse">展开菜单栏</el-button>
       <el-button @click="isCollapse=true" size="mini" v-show="!isCollapse">收起菜单栏</el-button>
-    </el-radio-group>
+    </el-radio-group>-->
     <el-row>
       <el-col :md="8">
         <div class="grid-content bg-purple">

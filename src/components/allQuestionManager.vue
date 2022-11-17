@@ -67,8 +67,12 @@
                   style="width: 400px"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="searchQuestion()">查询</el-button>
-        <el-button type="info" @click="resetValue()">重置</el-button>
+        <el-tooltip class="item" effect="dark" content="搜索" placement="top">
+          <el-button type="primary" @click="searchQuestion()"><i class="el-icon-search"></i></el-button>
+        </el-tooltip>
+        <el-tooltip class="item" effect="dark" content="重置条件" placement="top">
+          <el-button type="info" @click="resetValue()"><i class="el-icon-refresh"></i></el-button>
+        </el-tooltip>
       </el-form-item>
     </el-form>
     <el-table
@@ -94,21 +98,21 @@
         label="操作" align="center">
         <template slot-scope="scope">
           <el-tooltip class="item" effect="dark" content="查看详情" placement="top">
-            <el-button
-              size="mini" type="primary"
-              @click="handleDetails(scope.row.id)"><i class="el-icon-search"></i>
+            <el-button circle="true"
+                       size="medium" type="primary"
+                       @click="handleDetails(scope.row.id)"><i class="el-icon-search"></i>
             </el-button>
           </el-tooltip>
           <el-tooltip class="item" effect="dark" content="修改" placement="top">
-            <el-button
-              size="mini" type="warning"
-              @click="openModifyDialog(scope.row.id)"><i class="el-icon-edit"></i>
+            <el-button circle="true"
+                       size="medium" type="warning"
+                       @click="openModifyDialog(scope.row.id)"><i class="el-icon-edit"></i>
             </el-button>
           </el-tooltip>
           <el-tooltip class="item" effect="dark" content="删除" placement="top">
-            <el-button
-              size="mini" type="danger"
-              @click="openDialog(scope.row.id)"><i class="el-icon-delete"></i>
+            <el-button circle="true"
+                       size="medium" type="danger"
+                       @click="openDialog(scope.row.id)"><i class="el-icon-delete"></i>
             </el-button>
           </el-tooltip>
         </template>

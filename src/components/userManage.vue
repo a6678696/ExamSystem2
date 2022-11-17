@@ -74,9 +74,13 @@
         <el-input v-model="formSearch.userName" style="width: 255px" placeholder="用户名"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="searchUser()"><i class="el-icon-search"></i>查询</el-button>
-        <el-button type="info" @click="resetValue()"><i class="el-icon-refresh-left"></i>重置</el-button>
-        <el-button type="primary" @click="dialogVisibleAdd=true" plain><i class="el-icon-plus"></i>添加用户</el-button>
+        <el-tooltip class="item" effect="dark" content="搜索" placement="top">
+          <el-button type="primary" @click="searchUser()"><i class="el-icon-search"></i></el-button>
+        </el-tooltip>
+        <el-tooltip class="item" effect="dark" content="重置条件" placement="top">
+          <el-button type="info" @click="resetValue()"><i class="el-icon-refresh-left"></i></el-button>
+        </el-tooltip>
+        <el-button type="primary" @click="dialogVisibleAdd=true" plain><i class="el-icon-plus"></i> 添加用户</el-button>
       </el-form-item>
     </el-form>
     <el-table
@@ -93,14 +97,18 @@
       <el-table-column
         label="操作" align="center">
         <template slot-scope="scope">
-          <el-button
-            size="mini" type="primary"
-            @click="openDetailsDialog(scope.row.id)">查看
-          </el-button>
-          <el-button
-            size="mini" type="warning"
-            @click="openModifyDialog(scope.row.id)">修改
-          </el-button>
+          <el-tooltip class="item" effect="dark" content="查看详情" placement="top">
+            <el-button circle="true"
+                       size="medium" type="primary"
+                       @click="openDetailsDialog(scope.row.id)"><i class="el-icon-search"></i>
+            </el-button>
+          </el-tooltip>
+          <el-tooltip class="item" effect="dark" content="修改" placement="top">
+            <el-button circle="true"
+                       size="medium" type="warning"
+                       @click="openModifyDialog(scope.row.id)"><i class="el-icon-edit"></i>
+            </el-button>
+          </el-tooltip>
         </template>
       </el-table-column>
     </el-table>

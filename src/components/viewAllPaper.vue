@@ -53,13 +53,17 @@
                   style="width: 300px"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="searchPaper()">查询</el-button>
-        <el-button type="info" @click="resetValue()">重置</el-button>
+        <el-tooltip class="item" effect="dark" content="搜索" placement="top">
+          <el-button type="primary" @click="searchPaper()"><i class="el-icon-search"></i></el-button>
+        </el-tooltip>
+        <el-tooltip class="item" effect="dark" content="重置条件" placement="top">
+          <el-button type="info" @click="resetValue()"><i class="el-icon-refresh"></i></el-button>
+        </el-tooltip>
       </el-form-item>
     </el-form>
-    <el-table
-      :data="myPaper.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
-      style="width: 100%">
+    <el-table border="true"
+              :data="myPaper.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+              style="width: 100%">
       <el-table-column
         label="添加日期"
         prop="createDate" sortable align="center">
@@ -79,10 +83,12 @@
       <el-table-column
         label="操作" align="center">
         <template slot-scope="scope">
-          <el-button
-            size="mini" type="primary"
-            @click="handleDetails(scope.row.id)">查看
-          </el-button>
+          <el-tooltip class="item" effect="dark" content="查看详情" placement="top">
+            <el-button circle="true"
+              size="medium" type="primary"
+              @click="handleDetails(scope.row.id)"><i class="el-icon-search"></i>
+            </el-button>
+          </el-tooltip>
         </template>
       </el-table-column>
     </el-table>
@@ -134,7 +140,7 @@ export default {
       let param = new URLSearchParams();
       param.append("id", id);
       axios
-        .post(getServerUrl() +'paper/findById', param)
+        .post(getServerUrl() + 'paper/findById', param)
         .then(function (response) {
           _this.paperDetails.courseName = response.data.paper.courseName;
           _this.paperDetails.createDate = response.data.paper.createDate;
@@ -151,7 +157,7 @@ export default {
     //刷新页面数据
     reloadData: function () {
       axios
-        .get(getServerUrl() +'paper/getListFindByUserId?page=' + this.pagination.page + '&size=' + this.pagination.size)
+        .get(getServerUrl() + 'paper/getListFindByUserId?page=' + this.pagination.page + '&size=' + this.pagination.size)
         .then(response => (this.myPaper = response.data.rows, this.pagination.count = response.data.total))
         .catch(function (error) {
           console.log(error);
@@ -161,10 +167,10 @@ export default {
       this.formSearch.userName = '';
     },
     searchPaper: function () {
-      let _this=this;
+      let _this = this;
       axios
-        .get(getServerUrl() +'paper/getListFindByUserName?page=' + this.pagination.page + '&size=' + this.pagination.size+'&userName='+this.formSearch.userName)
-        .then(response => (this.myPaper = response.data.rows, this.pagination.count = response.data.total,_this.searchPaper()))
+        .get(getServerUrl() + 'paper/getListFindByUserName?page=' + this.pagination.page + '&size=' + this.pagination.size + '&userName=' + this.formSearch.userName)
+        .then(response => (this.myPaper = response.data.rows, this.pagination.count = response.data.total, _this.searchPaper()))
         .catch(function (error) {
           console.log(error);
         });
@@ -172,7 +178,7 @@ export default {
   },
   mounted() {
     axios
-      .get(getServerUrl() +'paper/getListFindByUserId?page=' + this.pagination.page + '&size=' + this.pagination.size)
+      .get(getServerUrl() + 'paper/getListFindByUserId?page=' + this.pagination.page + '&size=' + this.pagination.size)
       .then(response => (this.myPaper = response.data.rows, this.pagination.count = response.data.total))
       .catch(function (error) {
         console.log(error);

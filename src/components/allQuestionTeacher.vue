@@ -26,13 +26,17 @@
                   style="width: 400px"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="searchQuestion()">查询</el-button>
-        <el-button type="info" @click="allQuestionTeacherResetValue()">重置</el-button>
+        <el-tooltip class="item" effect="dark" content="搜索" placement="top">
+          <el-button type="primary" @click="searchQuestion()"><i class="el-icon-search"></i></el-button>
+        </el-tooltip>
+        <el-tooltip class="item" effect="dark" content="重置条件" placement="top">
+          <el-button type="info" @click="allQuestionTeacherResetValue()"><i class="el-icon-refresh"></i></el-button>
+        </el-tooltip>
       </el-form-item>
     </el-form>
-    <el-table
-      :data="allQuestionTeacher.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
-      style="width: 100%">
+    <el-table border="true"
+              :data="allQuestionTeacher.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+              style="width: 100%">
       <el-table-column
         label="添加日期"
         prop="addDate" sortable align="center">
@@ -52,10 +56,12 @@
       <el-table-column
         label="操作" align="center">
         <template slot-scope="scope">
-          <el-button
-            size="mini" type="primary"
-            @click="handleDetails(scope.row.id)">查看
-          </el-button>
+          <el-tooltip class="item" effect="dark" content="查看详情" placement="top">
+            <el-button circle="true"
+              size="medium" type="primary"
+              @click="handleDetails(scope.row.id)"><i class="el-icon-search"></i>
+            </el-button>
+          </el-tooltip>
         </template>
       </el-table-column>
     </el-table>
