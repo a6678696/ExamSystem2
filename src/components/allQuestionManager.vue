@@ -75,7 +75,7 @@
         </el-tooltip>
       </el-form-item>
     </el-form>
-    <el-table
+    <el-table border="true"
       :data="myQuestion.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%">
       <el-table-column

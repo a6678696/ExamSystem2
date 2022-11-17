@@ -86,7 +86,7 @@
         <el-button type="primary" @click="dialogVisibleAdd=true" plain><i class="el-icon-plus"></i> 添加科目</el-button>
       </el-form-item>
     </el-form>
-    <el-table
+    <el-table border="true"
       :data="courseList.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%">
       <el-table-column
