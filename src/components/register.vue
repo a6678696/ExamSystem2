@@ -4,7 +4,7 @@
       <p style="text-align: center"><img src="../assets/images/logo.png" height="55"/></p>
       <el-card class="box-card" shadow="always">
         <div slot="header" class="clearfix">
-          <strong>学生注册</strong>
+          <strong><span style="color:#a768db;">学生</span>注册</strong>
           <router-link type="primary" to="/login">
             <el-button style="float: right; padding: 3px 0" type="text">去登录<i class="el-icon-caret-right
 "></i></el-button>

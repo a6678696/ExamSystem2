@@ -1,6 +1,5 @@
 <template>
   <div>
-    <p style="margin-left: 18%">修改密码</p>
     <div style="width: 40%;margin-top: 6%">
       <el-form ref="form" :model="form" :rules="rules" label-width="80px" class="demo-ruleForm">
         <el-form-item label="用户名" prop="userName">
